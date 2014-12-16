@@ -1,0 +1,55 @@
+
+/* =============================================================
+   GENERAL STYLES
+ ============================================================ */
+body {
+    font-family: 'Open Sans', sans-serif;
+
+}
+
+.pad-top {
+    padding-top:40px;
+}
+
+.marketing {
+    margin-top: 50px;
+}
+
+.spacer-top {
+    margin-top: 10px;
+}
+
+.spacer-bottom {
+    margin-bottom: 10px;
+}
+
+/* Login CSS */
+
+#login-dropdown {
+    padding: 0px;
+    min-width: 250px;
+}
+
+#login-dropdown .alert {
+    margin-bottom: 0px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+/* Dashboard CSS */
+
+.dashboard-sidebar {
+    padding-bottom: 9px;
+    margin-top: 40px;
+}
+
+.dashboard-sidebar > ul > li.active > a {
+    text-decoration: none;
+    background-color: #eee;
+}
+
+#appDetails div.modal-footer,
+#appRecommendations div.modal-footer {
+    border-top: 0px;
+    border-bottom: 0px;
+}

@@ -1,0 +1,35 @@
+
+/* =============================================================
+   GENERAL STYLES
+ ============================================================ */
+body {
+    font-family: 'Open Sans', sans-serif;
+
+}
+
+.pad-top {
+    padding-top:40px;
+}
+
+.marketing {
+    margin-top: 50px;
+}
+
+.spacer-top {
+    margin-top: 10px;
+}
+
+.spacer-bottom {
+    margin-bottom: 10px;
+}
+
+#login-dropdown {
+    padding: 0px;
+    min-width: 200px;
+}
+
+#login-dropdown .alert {
+    margin-bottom: 0px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}

@@ -1,0 +1,93 @@
+<?php
+
+class UserController extends BaseController {
+
+	public function signup()
+	{
+
+        if(Request::isMethod('post'))
+        {
+            $errors = array();
+
+
+            if(Input::has("name"))
+                $name = Input::get('name');
+            else
+                $errors[] = 'Please enter your name!';
+
+            if(Input::has("email"))
+                $email = Input::get("email");
+            else
+                $errors[] = 'Please enter your email!';
+
+            if(Input::has('password'))
+                $password = Input::get('password');
+            else
+                $errors[] = 'Please enter a password!';
+
+            $test = User::where('email', $email)->first();
+
+            if($test)
+                $errors[] = 'Email already in use';
+
+            if(empty($errors)){
+
+                $user = new User;
+
+                $user->name = $name;
+                $user->email = $email;
+                $user->password = Hash::make($password);
+
+                $user->save();
+
+            } else {
+                return Redirect::to('signup')->with('errors', $errors);
+            }
+
+
+        }
+        else if(Request::isMethod('get'))
+        {
+            return View::make('signup');
+        }
+	}
+
+    public function login(){
+
+        //\Event::listen('illuminate.query', function($s, $b) { var_dump($s, $b); });
+
+        $errors = array();
+
+        if(Input::has("email"))
+            $email = Input::get("email");
+        else
+            $errors[] = 'Please enter your email!';
+
+        if(Input::has('password'))
+            $password = Input::get('password');
+        else
+            $errors[] = 'Please enter a password!';
+
+        //die($email);
+
+        if(empty($errors)){
+            if (Auth::attempt(array('email' => $email, 'password' => $password), true)) {
+                return Redirect::to('dashboard');
+            } else {
+                return Redirect::to('/')->with('errors_login', 'Incorect email or password');
+            }
+        }
+        else {
+            return Redirect::to('/')->with('errors_login', $errors);
+        }
+
+    }
+
+    public function logout(){
+        Auth::logout();
+        Session::flush();
+        return Redirect::to('/');
+    }
+
+
+}

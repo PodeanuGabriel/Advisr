@@ -1,0 +1,16 @@
+
+/* =============================================================
+   GENERAL STYLES
+ ============================================================ */
+body {
+    font-family: 'Open Sans', sans-serif;
+
+}
+
+.pad-top {
+    padding-top:40px;
+}
+
+.marketing {
+    margin-top: 50px;
+}

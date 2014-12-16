@@ -1,0 +1,75 @@
+<?php
+
+class AppController extends BaseController
+{
+    /**
+     * Add an app for a user.
+     *
+     * @return void
+     */
+    public function addApp()
+    {
+        $database = App::make('database');
+
+        if(Request::isMethod('post'))
+        {
+            $errors = array();
+
+            if(Input::has("name"))
+                $strAppName = Input::get("name");
+            else
+                $errors[] = 'Please enter app name!';
+
+            if(Input::has("data_url"))
+                $strDataURL = Input::get("data_url");
+            else
+                $errors[] = 'Please enter the URL from where data should be fetched!';
+
+            if(Input::has('rating_type'))
+                $strRatingType = Hash::make(Input::get('rating_type'));
+            else
+                $errors[] = 'Please enter a rating type!';
+
+            if(empty($errors))
+            {
+                if(Auth::check())
+                {
+                    DB::table('apps')->insert(
+                        array(
+                            "appsecret" => Uuid::generate(),
+                            "name" => PDO::quote($strAppName),
+                            "userid" => (int)Auth::user()->id,
+                            "data_url" => PDO::quote($strDataURL),
+                            "rating_type" => PDO::quote($strRatingType)
+                        )
+                    );
+                }
+                else
+                {
+                    return Redirect::to('/')->with('errors_login', 'Please log in first');
+                }
+            }
+            else
+            {
+                return Redirect::to('dashboard')->with('errors', $errors);
+            }
+        }
+        else if(Request::isMethod('get'))
+        {
+            return View::make('dashboard');
+        }
+    }
+
+
+    /**
+     * All apps for a user.
+     *
+     * @return array
+     */
+    public function userApps()
+    {
+        $database = App::make('database');
+
+        return DB::table('apps')->where('userid', '=', Auth::user()->id);
+    }
+}

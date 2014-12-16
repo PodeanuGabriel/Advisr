@@ -1,0 +1,20 @@
+<?php
+
+class DashboardController extends BaseController {
+    
+    public function index()
+    {
+        
+        $userID = 6;
+        $apps = array();
+        
+        try{
+            $apps = DB::select('select * from apps where userid = ?', array($userID));
+            
+        } catch(Exception $e){
+            return View::make('dashboard')->with('error', 'Apps failing');
+        }        
+        return View::make('dashboard')->with('apps', $apps);
+        
+    }
+}
