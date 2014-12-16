@@ -1,8 +1,0 @@
-@extends('layout.main')
-
-@section('content')
-
-<?php var_dump($errors); ?>
-
-<p>This is my body content.</p>
-@stop
