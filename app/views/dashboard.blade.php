@@ -22,16 +22,17 @@
                     ?>
 
                     <li>
-                        <a id="<?php echo $app->appid; ?>"
+                        <a id="<?php echo $app->app_id; ?>"
                             onclick="getAppDetails(
                                 this.id,
                                 '{{ URL::to('app-get'); }}',
                                 '{{ URL::to('app-edit'); }}',
                                 '{{ URL::to('app-recommendation'); }}',
-                                '{{ URL::to('app-categories'); }}'
+                                '{{ URL::to('app-users') }}',
+                                '{{ URL::to('categories'); }}'
                             );"
                         >
-                            <?php echo str_replace('\'', '', $app->name); ?>
+                            <?php echo str_replace('\'', '', $app->app_name); ?>
                         </a>
                     </li>
 

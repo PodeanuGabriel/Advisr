@@ -11,7 +11,7 @@ class AppController extends BaseController
     {
         $errors = array();
 
-        if(!Input::has("name"))
+        if(!Input::has("app_name"))
             $errors[] = "Please enter app name!";
 
         if(!Input::has("data_url"))
@@ -23,7 +23,7 @@ class AppController extends BaseController
 
         if(empty($errors))
         {
-            $strAppName = Input::get("name");
+            $strAppName = Input::get("app_name");
             $strDataURL = Input::get("data_url");
             $strRatingType = Input::get("rating_type");
 
@@ -33,8 +33,8 @@ class AppController extends BaseController
                 {
                     $app = new AppModel;
 
-                    $app->appsecret = Uuid::generate();
-                    $app->name = DB::connection()->getPdo()->quote($strAppName);
+                    $app->app_secret = Uuid::generate();
+                    $app->app_name = DB::connection()->getPdo()->quote($strAppName);
                     $app->userid = (int)Auth::user()->id;
                     $app->data_url = DB::connection()->getPdo()->quote($strDataURL);
                     $app->rating_type = DB::connection()->getPdo()->quote($strRatingType);
@@ -64,7 +64,7 @@ class AppController extends BaseController
     {
         if(Auth::check())
         {
-            $appData = AppModel::where('appid', '=', $nAppID)->get();
+            $appData = AppModel::where("app_id", "=", $nAppID)->get();
 
             return json_encode($appData);
         }
@@ -79,7 +79,7 @@ class AppController extends BaseController
     {
         $errors = array();
 
-        if(!Input::has("name"))
+        if(!Input::has("app_name"))
             $errors[] = "Please enter app name!";
 
         if(!Input::has("data_url"))
@@ -90,7 +90,7 @@ class AppController extends BaseController
 
         if(empty($errors))
         {
-            $strAppName = Input::get("name");
+            $strAppName = Input::get("app_name");
             $strDataURL = Input::get("data_url");
             $strRatingType = Input::get("rating_type");
 
@@ -98,9 +98,9 @@ class AppController extends BaseController
             {
                 try
                 {
-                    $app = AppModel::where('appid', '=', $nAppID)->update(
+                    $app = AppModel::where("app_id", "=", $nAppID)->update(
                         array(
-                            "name" => DB::connection()->getPdo()->quote($strAppName),
+                            "app_name" => DB::connection()->getPdo()->quote($strAppName),
                             "data_url" => DB::connection()->getPdo()->quote($strDataURL),
                             "rating_type" => DB::connection()->getPdo()->quote($strRatingType)
                         )
@@ -108,7 +108,7 @@ class AppController extends BaseController
                 }
                 catch(Exception $exc)
                 {
-                    return View::make('dashboard')->with('error', 'App retrieval failed');
+                    return View::make("dashboard")->with("error", "App retrieval failed");
                 }
 
                 return Redirect::to("dashboard");
@@ -138,36 +138,23 @@ class AppController extends BaseController
     }
 
 
-    public function getAppRecommendation($nAppID, $nProductID, $strCategory)
+
+    public function getAppUsers($nAppID)
     {
         if(Auth::check())
         {
-            $arrMockupData = array(
-                "response" => array(
-                    array(
-                        "product_id" => 23,
-                        "category" => $strCategory,
-                        "value" => 34,
-                    ),
-                    array(
-                        "product_id" => 28,
-                        "category" => $strCategory,
-                        "value" => 32,
-                    ),
-                    array(
-                        "product_id" => 36,
-                        "category" => "auto",
-                        "value" => 30,
-                    ),
-                    array(
-                        "product_id" => 102,
-                        "category" => "electrocasnice",
-                        "value" => 28,
-                    ),
-                ),
-            );
+            $arrUserIDs["response"] = array();
 
-            return json_encode($arrMockupData);
+            $arrPreferenceData = PreferenceModel::where("app_id", "=", $nAppID)->get();
+            foreach($arrPreferenceData as $objPreferenceData)
+            {
+                if(!in_array($objPreferenceData->user_id, $arrUserIDs["response"]))
+                {
+                    $arrUserIDs["response"][] = $objPreferenceData->user_id;
+                }
+            }
+
+            return json_encode($arrUserIDs);
         }
         else
         {
@@ -176,21 +163,43 @@ class AppController extends BaseController
     }
 
 
-    public function getAppCategories($nAppID)
+
+    public function getAppRecommendation($nAppID, $nUserID, $strCategory)
     {
         if(Auth::check())
         {
-            $arrMockupData = array(
-                "response" => array(
-                    "auto",
-                    "electrocasnice",
-                    "electronice",
-                    "imbracaminte",
-                    "decorative",
-                ),
-            );
+            $arrPreferenceData = array();
 
-            return json_encode($arrMockupData);
+            if($strCategory != "all")
+            {
+                $objCategory = CategoryModel::where("name", "=", $strCategory)->first();
+
+                $arrPreferences = PreferenceModel::where("app_id", "=", $nAppID)
+                    ->where("user_id", "=", $nUserID)
+                    ->where("category", "=", $objCategory->id)
+                    ->orderBy("rating", "desc")
+                    ->get();
+            }
+            else
+            {
+                $arrPreferences = PreferenceModel::where("app_id", "=", $nAppID)
+                    ->where("user_id", "=", $nUserID)
+                    ->orderBy("rating", "desc")
+                    ->get();
+            }
+
+            foreach($arrPreferences as $objPreference)
+            {
+                $objItemCategory = CategoryModel::where("id", "=", $objPreference->category)->first();
+
+                $arrPreferenceData["response"][] = array(
+                    "item_id" => $objPreference->item_id,
+                    "category" => $objItemCategory->name,
+                    "rating" => $objPreference->rating,
+                );
+            }
+
+            return json_encode($arrPreferenceData);
         }
         else
         {

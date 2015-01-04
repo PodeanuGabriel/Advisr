@@ -29,13 +29,13 @@ function renderTable(strParentID, arrColumnNames, arrData)
         var elRecommendationTableBodyRow = document.createElement("tr");
 
         var elProductID = document.createElement("td");
-        elProductID.innerHTML = arrData[arrRow]["product_id"];
+        elProductID.innerHTML = arrData[arrRow]["item_id"];
 
         var elProductCategory = document.createElement("td");
         elProductCategory.innerHTML = arrData[arrRow]["category"];
 
         var elProductValue = document.createElement("td");
-        elProductValue.innerHTML = arrData[arrRow]["value"];
+        elProductValue.innerHTML = arrData[arrRow]["rating"];
 
         elRecommendationTableBodyRow.appendChild(elProductID);
         elRecommendationTableBodyRow.appendChild(elProductCategory);
@@ -214,7 +214,7 @@ function clearForm(mxParentID)
 }
 
 
-function getAppDetails(nAppID, strAppGetRoute, strAppEditRoute, strAppRecommendationsRoute, strAppCategoriesRoute)
+function getAppDetails(nAppID, strAppGetRoute, strAppEditRoute, strAppRecommendationsRoute, strAppUsersRoute, strCategoriesRoute)
 {
     // Remove the active class from all <li> elements
     $("#appList > li").each(
@@ -230,9 +230,9 @@ function getAppDetails(nAppID, strAppGetRoute, strAppEditRoute, strAppRecommenda
 
     $.get(
         strAppGetRoute+"/"+nAppID,
-        function(mxResult)
+        function(mxResponse)
         {
-            var objResult = JSON.parse(mxResult);
+            var objResult = JSON.parse(mxResponse);
             if(objResult.length)
             {
                 // Remove previous rendered form
@@ -251,7 +251,7 @@ function getAppDetails(nAppID, strAppGetRoute, strAppEditRoute, strAppRecommenda
                         "label": "App name",
                         "type": "text",
                         "name": "name",
-                        "value": objResult[0]["name"].replace(/['"]+/g, '')
+                        "value": objResult[0]["app_name"].replace(/['"]+/g, '')
                     }
                 );
                 objFormAppData.fields.push(
@@ -278,50 +278,62 @@ function getAppDetails(nAppID, strAppGetRoute, strAppEditRoute, strAppRecommenda
 
 
                 // Add recommendation form only if the URL that returns the existing categories can be accessed.
+                var objFormAppRecommendations = {};
+                objFormAppRecommendations.parent_id = "appRecommendations";
+                objFormAppRecommendations.method = "";
+                objFormAppRecommendations.action = "";
+
+                objFormAppRecommendations.ajax_url = strAppRecommendationsRoute+"/"+nAppID;
+                objFormAppRecommendations.ajax_result_container_id = "recommendationList";
+
+                objFormAppRecommendations.ajax_callback = renderTable;
+                objFormAppRecommendations.ajax_callback_params = [
+                    "Item ID",
+                    "Category",
+                    "Rating"
+                ];
+
+                objFormAppRecommendations.fields = [];
+
                 $.get(
-                    strAppCategoriesRoute+"/"+nAppID,
+                    strAppUsersRoute+"/"+nAppID,
                     function(mxResponse)
                     {
                         var objResponse = JSON.parse(mxResponse);
-
                         if(objResponse["response"])
                         {
-                            var objFormAppRecommendations = {};
-                            objFormAppRecommendations.parent_id = "appRecommendations";
-                            objFormAppRecommendations.method = "";
-                            objFormAppRecommendations.action = "";
-
-                            objFormAppRecommendations.ajax_url = strAppRecommendationsRoute+"/"+nAppID;
-                            objFormAppRecommendations.ajax_result_container_id = "recommendationList";
-
-                            objFormAppRecommendations.ajax_callback = renderTable;
-                            objFormAppRecommendations.ajax_callback_params = [
-                                "Product ID",
-                                "Product category",
-                                "Recommendation value"
-                            ];
-
-                            objFormAppRecommendations.fields = [];
                             objFormAppRecommendations.fields.push(
                                 {
-                                    "label": "User ID",
-                                    "type": "number",
-                                    "name": "user_id",
-                                    "value": 1
-                                }
-                            );
-                            objFormAppRecommendations.fields.push(
-                                {
-                                    "label": "Category",
+                                    "label": "User",
                                     "type": "select",
-                                    "name": "category",
+                                    "name": "user_id",
                                     "values": objResponse["response"]
                                 }
                             );
 
-                            objFormAppRecommendations.submitText="Get";
+                            if(objResponse["response"].length)
+                                objFormAppRecommendations.submitText = "Get";
 
-                            renderForm(objFormAppRecommendations);
+                            $.get(
+                                strCategoriesRoute,
+                                function(mxResponse)
+                                {
+                                    var objResponse = JSON.parse(mxResponse);
+                                    if(objResponse["response"])
+                                    {
+                                        objFormAppRecommendations.fields.push(
+                                            {
+                                                "label": "Category",
+                                                "type": "select",
+                                                "name": "category",
+                                                "values": objResponse["response"]
+                                            }
+                                        );
+
+                                        renderForm(objFormAppRecommendations);
+                                    }
+                                }
+                            );
                         }
                     }
                 );

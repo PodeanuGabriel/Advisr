@@ -28,5 +28,8 @@ Route::any('/dashboard', 'DashboardController@index');
 Route::post('/app-add', 'AppController@addApp');
 Route::post('/app-edit/{appID}', 'AppController@editApp');
 Route::get('/app-get/{appID}', 'AppController@getApp');
-Route::get('/app-categories/{appID}', 'AppController@getAppCategories');
-Route::get('/app-recommendation/{appID}/{productID}/{category}', 'AppController@getAppRecommendation');
+Route::get('/app-users/{appID}', 'AppController@getAppUsers');
+Route::get('/app-recommendation/{appID}/{userID}/{category}', 'AppController@getAppRecommendation');
+
+/* CategoryController routes */
+Route::get('/categories', 'CategoryController@getCategories');
