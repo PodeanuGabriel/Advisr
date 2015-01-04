@@ -51,12 +51,11 @@
     </ol>
     <div class="carousel-inner">
         <div class="item active">
-            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="First slide">
             <div class="container">
                 <div class="carousel-caption">
                     <h1>Blazin' fast recommender service for application owners</h1>
                     <p>Improve your application's experience in a matter of minutes</p>
-                    <p><a class="btn btn-lg btn-primary" data-toggle="modal" data-target="#registerModal" role="button">Sign up today</a></p>
+                    <p><a class="btn btn-dark btn-lg btn-primary" data-toggle="modal" data-target="#registerModal" role="button">Sign up today</a></p>
                 </div>
             </div>
         </div>
