@@ -44,7 +44,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <input type="submit" form="registerForm" name="submitButton" class="btn btn-success" value="Submit" />
+                <input type="submit" form="registerForm" name="submitButton" class="btn btn-dark btn-success" value="Submit" />
             </div>
         </div>
     </div>

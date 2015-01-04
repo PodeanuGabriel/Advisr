@@ -124,6 +124,33 @@ body {
     color: #F8CA4D !important;
 }
 
+.btn-light {
+    background-color: #F5E5C0 !important;
+    color: #2F3440 !important;
+    border-color: #2F3440 !important;
+}
+
+/***********************************
+ ************* MODALS **************
+ ***********************************/
+.modal-dialog > .modal-content {
+    background-color: #3F5666;
+    color: #F8CA4D;    
+}
+
+.modal-dialog > .modal-content > .modal-header {
+    background-color: #2F3440;
+    font-size: 20px;
+}
+
+.modal-dialog > .modal-content > .modal-header > .close {
+    color: #F8CA4D;
+    opacity: .9;
+    font-size: 30px;
+    padding: 10px;    
+}
+
+
 /*    --------------------------------------------------
 	:: Login Section
 	-------------------------------------------------- */
