@@ -8,13 +8,20 @@ class CategoryController extends BaseController
         {
             $arrCategoryNames["response"] = array("all");
 
-            $arrCategories = CategoryModel::all();
-            foreach($arrCategories as $objCategory)
+            try
             {
-                if(!in_array($objCategory->name, $arrCategoryNames["response"]))
+                $arrCategories = CategoryModel::all();
+                foreach($arrCategories as $objCategory)
                 {
-                    $arrCategoryNames["response"][] = $objCategory->name;
+                    if(!in_array($objCategory->name, $arrCategoryNames["response"]))
+                    {
+                        $arrCategoryNames["response"][] = $objCategory->name;
+                    }
                 }
+            }
+            catch(Exception $exc)
+            {
+                return Redirect::to("dashboard")->with("errors", $exc->getMessage());
             }
 
             return json_encode($arrCategoryNames);

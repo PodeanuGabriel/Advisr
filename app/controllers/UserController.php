@@ -37,13 +37,20 @@ class UserController extends BaseController
 
                 if(empty($errors))
                 {
-                    $user = new User;
+                    try
+                    {
+                        $user = new User;
 
-                    $user->name = $name;
-                    $user->email = $email;
-                    $user->password = Hash::make($password);
+                        $user->name = $name;
+                        $user->email = $email;
+                        $user->password = Hash::make($password);
 
-                    $user->save();
+                        $user->save();
+                    }
+                    catch(Exception $exc)
+                    {
+                        Redirect::to("signup")->with("errors", $exc->getMessage());
+                    }
 
                     return $this->authenticate($email, $password);
                 }
