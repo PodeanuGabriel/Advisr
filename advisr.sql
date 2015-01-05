@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 04 Ian 2015 la 16:11
+-- Generation Time: 05 Ian 2015 la 21:36
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -27,12 +27,12 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `apps` (
-  `app_id` int(10) NOT NULL,
-  `app_name` varchar(255) NOT NULL,
-  `app_secret` varchar(255) NOT NULL,
+`id` int(10) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `appsecret` varchar(255) NOT NULL,
   `data_url` varchar(255) NOT NULL,
   `userid` int(10) NOT NULL,
-  `rating_type` varchar(20) NOT NULL,
+  `rating_type` varchar(20) NOT NULL DEFAULT 'unary',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
@@ -41,8 +41,29 @@ CREATE TABLE IF NOT EXISTS `apps` (
 -- Salvarea datelor din tabel `apps`
 --
 
-INSERT INTO `apps` (`app_id`, `app_name`, `app_secret`, `data_url`, `userid`, `rating_type`) VALUES
-(1, 'TEST', 'TEST', 'asd', 6, 'unary');
+INSERT INTO `apps` (`id`, `name`, `appsecret`, `data_url`, `userid`, `rating_type`, `created_at`, `updated_at`) VALUES
+(1, 'TEST', 'TEST', 'asd', 6, 'unary', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Structura de tabel pentru tabelul `app_categories`
+--
+
+CREATE TABLE IF NOT EXISTS `app_categories` (
+  `id_app` int(10) unsigned NOT NULL,
+  `id_category` int(10) unsigned NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Salvarea datelor din tabel `app_categories`
+--
+
+INSERT INTO `app_categories` (`id_app`, `id_category`, `created_at`, `updated_at`) VALUES
+(1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(1, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -51,7 +72,7 @@ INSERT INTO `apps` (`app_id`, `app_name`, `app_secret`, `data_url`, `userid`, `r
 --
 
 CREATE TABLE IF NOT EXISTS `categories` (
-  `id` int(10) unsigned NOT NULL,
+`id` int(10) unsigned NOT NULL,
   `name` varchar(30) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
@@ -61,9 +82,29 @@ CREATE TABLE IF NOT EXISTS `categories` (
 -- Salvarea datelor din tabel `categories`
 --
 
-INSERT INTO `categories` (`id`, `name`) VALUES
-(1, 'frigider'),
-(2, 'haine');
+INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'frigider', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 'haine', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Structura de tabel pentru tabelul `items`
+--
+
+CREATE TABLE IF NOT EXISTS `items` (
+`id` int(10) unsigned NOT NULL,
+  `url` varchar(512) NOT NULL,
+  `category` int(10) unsigned NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Salvarea datelor din tabel `items`
+--
+
+INSERT INTO `items` (`id`, `url`, `category`) VALUES
+(1, 'http://localhost/test_js.html', 1),
+(2, 'http://localhost/test_js2.html', 2);
 
 -- --------------------------------------------------------
 
@@ -72,26 +113,18 @@ INSERT INTO `categories` (`id`, `name`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `preferences` (
-`id` int(10) unsigned NOT NULL,
-  `app_id` int(10) unsigned NOT NULL,
   `user_id` int(10) unsigned NOT NULL,
-  `item_id` int(10) unsigned NOT NULL,
-  `rating` float NOT NULL,
-  `category` int(10) NOT NULL,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+  `item_id` int(10) unsigned NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Salvarea datelor din tabel `preferences`
 --
 
-INSERT INTO `preferences` (`id`, `app_id`, `user_id`, `item_id`, `rating`, `category`) VALUES
-(2, 1, 1, 1, 2.3, 1),
-(3, 1, 1, 2, 2.5, 1),
-(4, 1, 1, 3, 4, 2),
-(5, 1, 2, 2, 5, 1),
-(6, 1, 3, 1, 4, 1);
+INSERT INTO `preferences` (`user_id`, `item_id`) VALUES
+(1, 1),
+(2, 1),
+(2, 2);
 
 -- --------------------------------------------------------
 
@@ -107,14 +140,15 @@ CREATE TABLE IF NOT EXISTS `users` (
   `remember_token` varchar(255) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Salvarea datelor din tabel `users`
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(6, 'test', 'lucian.radu91@gmail.com', '$2y$10$7ydcVAyF3Sx1ZKQ3t6iLfOoc9cHNgGAsfNF5XUtEBmvX6BFE70cBy', 'AeH3pg02qK8iuhaDOBZkZsxJj4ww11fPZW1UtS0gNDlGmEIMxYB9EZSggIyo', '2014-10-26 15:41:36', '2014-10-26 16:36:50');
+(6, 'test', 'lucian.radu91@gmail.com', '$2y$10$7ydcVAyF3Sx1ZKQ3t6iLfOoc9cHNgGAsfNF5XUtEBmvX6BFE70cBy', 'bcqM6qt3B9VlfuiBavvrltxyBJGfBsEsvTWSW6yzJ36e17Cqxb4j8jhRe15v', '2014-10-26 15:41:36', '2015-01-04 18:41:41'),
+(7, 'luci', 'lucian.radu91@gmail.com2', '$2y$10$YiHyLlaENsd8y08akRMJlOw9s2N3GSNfVaQyeYKt2il2WgqX8pYaK', 'o7qVNKpXcwdvFkODYoiOTaLj1ZDNUf7DvtePv2lmTACABrdKjxn37H8Up7JR', '2015-01-04 18:42:14', '2015-01-04 18:43:17');
 
 -- --------------------------------------------------------
 
@@ -124,17 +158,18 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `remember_token`, `creat
 
 CREATE TABLE IF NOT EXISTS `user_mappings` (
   `user_id` varchar(100) NOT NULL,
-  `user_id_int` int(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+`user_id_int` int(10) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Salvarea datelor din tabel `user_mappings`
 --
 
 INSERT INTO `user_mappings` (`user_id`, `user_id_int`) VALUES
+('asdasd', 1),
 ('123wdes', 2),
 ('324dfs', 3),
-('asdasd', 1);
+('bbpj5rk9', 4);
 
 --
 -- Indexes for dumped tables
@@ -144,7 +179,13 @@ INSERT INTO `user_mappings` (`user_id`, `user_id_int`) VALUES
 -- Indexes for table `apps`
 --
 ALTER TABLE `apps`
- ADD PRIMARY KEY (`app_id`);
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `app_categories`
+--
+ALTER TABLE `app_categories`
+ ADD PRIMARY KEY (`id_app`,`id_category`);
 
 --
 -- Indexes for table `categories`
@@ -153,10 +194,16 @@ ALTER TABLE `categories`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `items`
+--
+ALTER TABLE `items`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `url` (`url`);
+
+--
 -- Indexes for table `preferences`
 --
 ALTER TABLE `preferences`
- ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`user_id`,`item_id`);
 
 --
 -- Indexes for table `users`
@@ -168,7 +215,7 @@ ALTER TABLE `users`
 -- Indexes for table `user_mappings`
 --
 ALTER TABLE `user_mappings`
- ADD PRIMARY KEY (`user_id`);
+ ADD PRIMARY KEY (`user_id_int`), ADD UNIQUE KEY `user_id_int` (`user_id_int`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -178,22 +225,27 @@ ALTER TABLE `user_mappings`
 -- AUTO_INCREMENT for table `apps`
 --
 ALTER TABLE `apps`
-MODIFY `app_id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
 MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT for table `preferences`
+-- AUTO_INCREMENT for table `items`
 --
-ALTER TABLE `preferences`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+ALTER TABLE `items`
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `user_mappings`
+--
+ALTER TABLE `user_mappings`
+MODIFY `user_id_int` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
