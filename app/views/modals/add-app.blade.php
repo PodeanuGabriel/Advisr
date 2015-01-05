@@ -26,14 +26,6 @@
                             <input type="url" class="form-control" name="data_url" required aria-required="true"/>
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Rating type</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="rating_type" required aria-required="true"/>
-                        </div>
-                    </div>
-
                 </form>
             </div>
             <div class="modal-footer">

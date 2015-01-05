@@ -17,15 +17,11 @@ class AppController extends BaseController
         if(!Input::has("data_url"))
             $errors[] = "Please enter the URL from where data should be fetched!";
 
-        if(!Input::has("rating_type"))
-            $errors[] = "Please enter a rating type!";
-
 
         if(empty($errors))
         {
             $strAppName = Input::get("name");
             $strDataURL = Input::get("data_url");
-            $strRatingType = Input::get("rating_type");
 
             if(empty($errors))
             {
@@ -39,7 +35,6 @@ class AppController extends BaseController
                         $app->name = $strAppName;
                         $app->userid = Auth::user()->id;
                         $app->data_url = $strDataURL;
-                        $app->rating_type = $strRatingType;
 
                         $app->save();
                     }
@@ -99,14 +94,10 @@ class AppController extends BaseController
         if(!Input::has("data_url"))
             $errors[] = "Please enter the URL from where data should be fetched!";
 
-        if(!Input::has("rating_type"))
-            $errors[] = "Please enter a rating type!";
-
         if(empty($errors))
         {
             $strAppName = Input::get("name");
             $strDataURL = Input::get("data_url");
-            $strRatingType = Input::get("rating_type");
 
             if(Auth::check())
             {
@@ -115,8 +106,7 @@ class AppController extends BaseController
                     $app = AppModel::where("id", "=", $nAppID)->update(
                         array(
                             "name" => $strAppName,
-                            "data_url" => $strDataURL,
-                            "rating_type" => $strRatingType
+                            "data_url" => $strDataURL
                         )
                     );
                 }
