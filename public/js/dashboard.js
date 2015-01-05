@@ -250,7 +250,7 @@ function getAppDetails(nAppID, strAppGetRoute, strAppEditRoute, strAppRecommenda
                     {
                         "label": "App name",
                         "type": "text",
-                        "name": "name",
+                        "name": "app_name",
                         "value": objResult[0]["app_name"].replace(/['"]+/g, '')
                     }
                 );

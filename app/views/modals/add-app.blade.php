@@ -16,7 +16,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Name</label>
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" name="name" required aria-required="true"/>
+                            <input type="text" class="form-control" name="app_name" required aria-required="true"/>
                         </div>
                     </div>
 
