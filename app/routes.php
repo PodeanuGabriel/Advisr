@@ -32,4 +32,5 @@ Route::get('/app-users/{appID}', 'AppController@getAppUsers');
 Route::get('/app-recommendation/{appID}/{userID}/{category}', 'AppController@getAppRecommendation');
 
 /* CategoryController routes */
+Route::post('/category-add', 'CategoryController@addCategory');
 Route::get('/categories', 'CategoryController@getCategories');

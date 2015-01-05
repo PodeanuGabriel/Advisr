@@ -11,7 +11,7 @@ class AppController extends BaseController
     {
         $errors = array();
 
-        if(!Input::has("app_name"))
+        if(!Input::has("name"))
             $errors[] = "Please enter app name!";
 
         if(!Input::has("data_url"))
@@ -23,7 +23,7 @@ class AppController extends BaseController
 
         if(empty($errors))
         {
-            $strAppName = Input::get("app_name");
+            $strAppName = Input::get("name");
             $strDataURL = Input::get("data_url");
             $strRatingType = Input::get("rating_type");
 
@@ -35,11 +35,11 @@ class AppController extends BaseController
                     {
                         $app = new AppModel;
 
-                        $app->app_secret = Uuid::generate();
-                        $app->app_name = DB::connection()->getPdo()->quote($strAppName);
-                        $app->userid = (int)Auth::user()->id;
-                        $app->data_url = DB::connection()->getPdo()->quote($strDataURL);
-                        $app->rating_type = DB::connection()->getPdo()->quote($strRatingType);
+                        $app->appsecret = Uuid::generate();
+                        $app->name = $strAppName;
+                        $app->userid = Auth::user()->id;
+                        $app->data_url = $strDataURL;
+                        $app->rating_type = $strRatingType;
 
                         $app->save();
                     }
@@ -73,7 +73,7 @@ class AppController extends BaseController
         {
             try
             {
-                $appData = AppModel::where("app_id", "=", $nAppID)->get();
+                $appData = AppModel::where("id", "=", $nAppID)->get();
             }
             catch(Exception $exc)
             {
@@ -93,7 +93,7 @@ class AppController extends BaseController
     {
         $errors = array();
 
-        if(!Input::has("app_name"))
+        if(!Input::has("name"))
             $errors[] = "Please enter app name!";
 
         if(!Input::has("data_url"))
@@ -104,7 +104,7 @@ class AppController extends BaseController
 
         if(empty($errors))
         {
-            $strAppName = Input::get("app_name");
+            $strAppName = Input::get("name");
             $strDataURL = Input::get("data_url");
             $strRatingType = Input::get("rating_type");
 
@@ -112,11 +112,11 @@ class AppController extends BaseController
             {
                 try
                 {
-                    $app = AppModel::where("app_id", "=", $nAppID)->update(
+                    $app = AppModel::where("id", "=", $nAppID)->update(
                         array(
-                            "app_name" => DB::connection()->getPdo()->quote($strAppName),
-                            "data_url" => DB::connection()->getPdo()->quote($strDataURL),
-                            "rating_type" => DB::connection()->getPdo()->quote($strRatingType)
+                            "name" => $strAppName,
+                            "data_url" => $strDataURL,
+                            "rating_type" => $strRatingType
                         )
                     );
                 }
@@ -142,16 +142,22 @@ class AppController extends BaseController
     {
         if(Auth::check())
         {
-            $arrUserIDs["response"] = array();
+            $arrUserNames["response"] = array();
 
             try
             {
-                $arrPreferenceData = PreferenceModel::where("app_id", "=", $nAppID)->get();
-                foreach($arrPreferenceData as $objPreferenceData)
+                $arrUsers = AppCategoryModel::join("categories", "app_categories.id_category", "=", "categories.id")
+                    ->join("items", "categories.id", "=", "items.category")
+                    ->join("preferences", "items.id", "=", "preferences.item_id")
+                    ->join("user_mappings", "preferences.user_id", "=", "user_mappings.user_id_int")
+                    ->where("app_categories.id_app", "=", $nAppID)
+                    ->get();
+
+                foreach($arrUsers as $objUser)
                 {
-                    if(!in_array($objPreferenceData->user_id, $arrUserIDs["response"]))
+                    if(!in_array($objUser->user_id, $arrUserNames["response"]))
                     {
-                        $arrUserIDs["response"][] = $objPreferenceData->user_id;
+                        $arrUserNames["response"][] = $objUser->user_id;
                     }
                 }
             }
@@ -160,7 +166,7 @@ class AppController extends BaseController
                 return Redirect::to("dashboard")->with("errors", $exc->getMessage());
             }
 
-            return json_encode($arrUserIDs);
+            return json_encode($arrUserNames);
         }
         else
         {
@@ -170,41 +176,39 @@ class AppController extends BaseController
 
 
 
-    public function getAppRecommendation($nAppID, $nUserID, $strCategory)
+    public function getAppRecommendation($nAppID, $strUserName, $strCategories)
     {
         if(Auth::check())
         {
             $arrPreferenceData = array();
 
+            $arrCategories = explode(",", $strCategories);
+
             try
             {
-                if($strCategory != "all")
-                {
-                    $objCategory = CategoryModel::where("name", "=", $strCategory)->first();
+                $objUserName = UserMappingsModel::where("user_id", "=", $strUserName)->first();
+                $arrExistingCategories = CategoryModel::whereIn("name", $arrCategories)->get();
 
-                    $arrPreferences = PreferenceModel::where("app_id", "=", $nAppID)
-                        ->where("user_id", "=", $nUserID)
-                        ->where("category", "=", $objCategory->id)
-                        ->orderBy("rating", "desc")
+                foreach($arrExistingCategories as $objCategory)
+                {
+                    $arrPreferences = AppCategoryModel::join("categories", "app_categories.id_category", "=", "categories.id")
+                        ->join("items", "categories.id", "=", "items.category")
+                        ->join("preferences", "items.id", "=", "preferences.item_id")
+                        ->join("user_mappings", "preferences.user_id", "=", "user_mappings.user_id_int")
+                        ->where("app_categories.id_app", "=", $nAppID)
+                        ->where("app_categories.id_category", "=", $objCategory->id)
+                        ->where("user_mappings.user_id_int", "=", $objUserName->user_id_int)
                         ->get();
-                }
-                else
-                {
-                    $arrPreferences = PreferenceModel::where("app_id", "=", $nAppID)
-                        ->where("user_id", "=", $nUserID)
-                        ->orderBy("rating", "desc")
-                        ->get();
-                }
 
-                foreach($arrPreferences as $objPreference)
-                {
-                    $objItemCategory = CategoryModel::where("id", "=", $objPreference->category)->first();
+                    foreach($arrPreferences as $objPreference)
+                    {
+                        $objItemCategory = CategoryModel::where("id", "=", $objPreference->category)->first();
 
-                    $arrPreferenceData["response"][] = array(
-                        "item_id" => $objPreference->item_id,
-                        "category" => $objItemCategory->name,
-                        "rating" => $objPreference->rating,
-                    );
+                        $arrPreferenceData["response"][] = array(
+                            "item_id" => $objPreference->item_id,
+                            "category" => $objItemCategory->name,
+                        );
+                    }
                 }
             }
             catch(Exception $exc)

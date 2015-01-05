@@ -1,9 +1,20 @@
 @extends('layout.main')
 
 @include('modals/add-app')
+@include('modals/add-category')
 
 @section('content')
 
+<?php if(count($errors)) : ?>
+
+    <?php var_dump($errors); ?>
+
+    <div class="alert alert-error">
+        <a href="#" class="close" data-dismiss="alert">&times;</a>
+        <strong>Error!</strong> A problem occurred while submitting your data.
+    </div>
+
+<?php endif; ?>
 
 <div class="container-fluid">
     <div class="row">
@@ -14,6 +25,10 @@
                 <a class="btn btn-primary" data-toggle="modal" data-target="#addAppModal" role="button">ADD APP</a>
             </div>
 
+            <div class="sidevar dashboard-sidebar">
+                <a class="btn btn-primary" data-toggle="modal" data-target="#addCategoryModal" role="button">ADD CATEGORY</a>
+            </div>
+
             <div class="sidebar dashboard-sidebar">
                 <ul id="appList" class="nav nav-sidebar">
                     <?php
@@ -22,7 +37,7 @@
                     ?>
 
                     <li>
-                        <a id="<?php echo $app->app_id; ?>"
+                        <a id="<?php echo $app->id; ?>"
                             onclick="getAppDetails(
                                 this.id,
                                 '{{ URL::to('app-get'); }}',
@@ -32,7 +47,7 @@
                                 '{{ URL::to('categories'); }}'
                             );"
                         >
-                            <?php echo str_replace('\'', '', $app->app_name); ?>
+                            <?php echo str_replace('\'', '', $app->name); ?>
                         </a>
                     </li>
 

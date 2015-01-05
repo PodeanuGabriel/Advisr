@@ -34,12 +34,8 @@ function renderTable(strParentID, arrColumnNames, arrData)
         var elProductCategory = document.createElement("td");
         elProductCategory.innerHTML = arrData[arrRow]["category"];
 
-        var elProductValue = document.createElement("td");
-        elProductValue.innerHTML = arrData[arrRow]["rating"];
-
         elRecommendationTableBodyRow.appendChild(elProductID);
         elRecommendationTableBodyRow.appendChild(elProductCategory);
-        elRecommendationTableBodyRow.appendChild(elProductValue);
 
         elRecommendationTableBody.appendChild(elRecommendationTableBodyRow);
     }
@@ -76,17 +72,7 @@ function renderForm(objFormData)
         elFormInputContainer.setAttribute("class", "col-sm-6");
 
         //Separate behaviour for select inputs.
-        if(objFormData.fields[objInput].type != "select")
-        {
-            var elFormInput = document.createElement("input");
-            elFormInput.setAttribute("type", objFormData.fields[objInput].type);
-            elFormInput.setAttribute("name", objFormData.fields[objInput].name);
-            elFormInput.setAttribute("value", objFormData.fields[objInput].value);
-            elFormInput.setAttribute("class", "form-control");
-            elFormInput.setAttribute("required", "required");
-            elFormInput.setAttribute("aria-required", "true");
-        }
-        else
+        if(objFormData.fields[objInput].type == "select")
         {
             var elFormInput = document.createElement("select");
             elFormInput.setAttribute("name", "select"+objFormData.fields[objInput].name);
@@ -101,6 +87,42 @@ function renderForm(objFormData)
 
                 elFormInput.appendChild(elFormInputOption);
             }
+        }
+        else if(objFormData.fields[objInput].type == "checkbox")
+        {
+            var elFormInput = document.createElement("ul");
+            elFormInput.setAttribute("class", "list-unstyled");
+
+            for(var nIndex in objFormData.fields[objInput]["values"])
+            {
+                var elFormInputItem = document.createElement("li");
+
+                var elFormInputCheckbox = document.createElement("input");
+                elFormInputCheckbox.setAttribute("type", objFormData.fields[objInput].type);
+                elFormInputCheckbox.setAttribute("name", objFormData.fields[objInput]["values"][nIndex]);
+                elFormInputCheckbox.setAttribute("id", objFormData.fields[objInput]["values"][nIndex]);
+                elFormInputCheckbox.setAttribute("value", objFormData.fields[objInput]["values"][nIndex]);
+                elFormInputCheckbox.innerHTML = objFormData.fields[objInput]["values"][nIndex];
+
+                var elFormInputCheckboxLabel = document.createElement("label");
+                elFormInputCheckboxLabel.setAttribute("for", objFormData.fields[objInput]["values"][nIndex]);
+                elFormInputCheckboxLabel.innerHTML = objFormData.fields[objInput]["values"][nIndex];
+
+                elFormInputItem.appendChild(elFormInputCheckbox);
+                elFormInputItem.appendChild(elFormInputCheckboxLabel);
+
+                elFormInput.appendChild(elFormInputItem);
+            }
+        }
+        else
+        {
+            var elFormInput = document.createElement("input");
+            elFormInput.setAttribute("type", objFormData.fields[objInput].type);
+            elFormInput.setAttribute("name", objFormData.fields[objInput].name);
+            elFormInput.setAttribute("value", objFormData.fields[objInput].value);
+            elFormInput.setAttribute("class", "form-control");
+            elFormInput.setAttribute("required", "required");
+            elFormInput.setAttribute("aria-required", "true");
         }
 
         elFormInputContainer.appendChild(elFormInput);
@@ -127,6 +149,7 @@ function renderForm(objFormData)
                 {
                     var arrFormInputs = $("#"+objFormData.parent_id+" :input");
                     var strInitialURL = objFormData.ajax_url;
+                    var arrCheckboxValues = [];
                     var bInvalidInput = false;
 
                     for(var elInput in arrFormInputs)
@@ -147,9 +170,21 @@ function renderForm(objFormData)
                             }
                             else
                             {
-                                objFormData.ajax_url = objFormData.ajax_url + "/" + arrFormInputs[elInput].value;
+                                if(arrFormInputs[elInput].type != "checkbox")
+                                {
+                                    objFormData.ajax_url = objFormData.ajax_url + "/" + arrFormInputs[elInput].value;
+                                }
+                                else if(arrFormInputs[elInput].checked)
+                                {
+                                    arrCheckboxValues.push(arrFormInputs[elInput].value);
+                                }
                             }
                         }
+                    }
+
+                    if(arrCheckboxValues.length)
+                    {
+                        objFormData.ajax_url = objFormData.ajax_url + "/" + arrCheckboxValues;
                     }
 
                     if(!bInvalidInput)
@@ -193,11 +228,16 @@ function renderForm(objFormData)
         elSubmitButton.setAttribute("type", "submit");
     }
 
-    elSubmitButton.setAttribute("value", objFormData.submitText);
-    elSubmitButton.setAttribute("class", "btn btn-success");
+    if(objFormData.submitText)
+    {
+        elSubmitButton.setAttribute("value", objFormData.submitText);
+        elSubmitButton.setAttribute("class", "btn btn-success");
 
-    elSubmitButtonContainer.appendChild(elSubmitButton);
-    elForm.appendChild(elSubmitButtonContainer);
+        elSubmitButtonContainer.appendChild(elSubmitButton);
+
+        elForm.appendChild(elSubmitButtonContainer);
+    }
+
 
     document.getElementById(objFormData.parent_id).appendChild(elForm);
 }
@@ -250,8 +290,8 @@ function getAppDetails(nAppID, strAppGetRoute, strAppEditRoute, strAppRecommenda
                     {
                         "label": "App name",
                         "type": "text",
-                        "name": "app_name",
-                        "value": objResult[0]["app_name"].replace(/['"]+/g, '')
+                        "name": "name",
+                        "value": objResult[0]["name"].replace(/['"]+/g, '')
                     }
                 );
                 objFormAppData.fields.push(
@@ -260,14 +300,6 @@ function getAppDetails(nAppID, strAppGetRoute, strAppEditRoute, strAppRecommenda
                         "type": "url",
                         "name": "data_url",
                         "value": objResult[0]["data_url"].replace(/['"]+/g, '')
-                    }
-                );
-                objFormAppData.fields.push(
-                    {
-                        "label": "Rating type",
-                        "type": "text",
-                        "name": "rating_type",
-                        "value": objResult[0]["rating_type"].replace(/['"]+/g, '')
                     }
                 );
 
@@ -290,7 +322,6 @@ function getAppDetails(nAppID, strAppGetRoute, strAppEditRoute, strAppRecommenda
                 objFormAppRecommendations.ajax_callback_params = [
                     "Item ID",
                     "Category",
-                    "Rating"
                 ];
 
                 objFormAppRecommendations.fields = [];
@@ -323,9 +354,9 @@ function getAppDetails(nAppID, strAppGetRoute, strAppEditRoute, strAppRecommenda
                                     {
                                         objFormAppRecommendations.fields.push(
                                             {
-                                                "label": "Category",
-                                                "type": "select",
-                                                "name": "category",
+                                                "label": "Categories",
+                                                "type": "checkbox",
+                                                "name": "categories",
                                                 "values": objResponse["response"]
                                             }
                                         );
