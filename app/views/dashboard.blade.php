@@ -1,7 +1,6 @@
 @extends('layout.main')
 
 @include('modals/add-app')
-@include('modals/add-category')
 
 @section('content')
 
@@ -23,10 +22,6 @@
 
             <div class="sidebar dashboard-sidebar">
                 <a class="btn btn-primary" data-toggle="modal" data-target="#addAppModal" role="button">ADD APP</a>
-            </div>
-
-            <div class="sidevar dashboard-sidebar">
-                <a class="btn btn-primary" data-toggle="modal" data-target="#addCategoryModal" role="button">ADD CATEGORY</a>
             </div>
 
             <div class="sidebar dashboard-sidebar">
@@ -65,23 +60,57 @@
 
             <h1>Dashboard</h1>
 
-            <div class="placeholders">
+            <ul class="nav nav-tabs" data-tabs="tabs">
+                <li class="active"><a href="#apps" data-toggle="tab">Apps</a></li>
+                <li><a href="#embedded" data-toggle="tab">Code to embed</a></li>
+                <li><a href="#statistics" data-toggle="tab">Statistics</a></li>
+            </ul>
 
-                <h3 class="page-header">Edit app</h3>
-                <div id="appDetails" class="col-sm-12 placeholder"></div>
+            <div class="tab-content">
+                <div class="tab-pane active" id="apps">
+                    <div class="placeholders">
+                        <h3 class="page-header">Edit app</h3>
+                        <div id="appDetails" class="col-sm-12 placeholder"></div>
 
-                <div style="clear:both"></div>
+                        <div style="clear:both"></div>
 
-                <h3 class="page-header">Get recommendations</h3>
-                <div id="appRecommendations" class="col-sm-12 placeholder"></div>
+                        <h3 class="page-header">Get recommendations</h3>
+                        <div id="appRecommendations" class="col-sm-12 placeholder"></div>
 
-                <div style="clear:both"></div>
+                        <div style="clear:both"></div>
 
-                <div id="recommendationList"></div>
+                        <div id="recommendationList"></div>
+                    </div>
 
+                    <div style="clear:both"></div>
+                </div>
+
+                <div class="tab-pane" id="embedded">
+                    <h3 class="page-header">What to add</h3>
+                    <br/>
+                    <p>In order to add users to registered app you need to embed the following code snippet into your web page code.</p>
+                    <br/>
+                    <p>
+                        <code>
+                            <span>&lt;div id="advisr-box"&gt;&lt;/div&gt;</span><br/>
+                            <br/>
+                            <span>&lt;script&gt;</span><br/>
+                            <span>var advisrApiKey = 'TEST';</span><br/>
+                            <span>var advisrApiSecret = 'TEST';</span><br/>
+                            <span>var advisrHowMany = 3;</span><br/>
+                            <span>&lt;/script&gt;</span><br/>
+                            <br/>
+                            <span>&lt;script type="text/javascript" src="box.js"&gt;&lt;/script&gt;</span>
+                        </code>
+                    </p>
+                    <br/>
+                    <p>The <code>advisrApikey</code> and <code>advisrApiSecret</code> variables have to contain the actual API_KEY and API_SECRET received upon adding an app.</p>
+                </div>
+
+                <div class="tab-pane" id="statistics">
+
+                </div>
             </div>
-
-            <div style="clear:both"></div>
 
         </div>
 
