@@ -4,7 +4,14 @@ class DashboardController extends BaseController {
     
     public function index()
     {       
-        $userID = Auth::user()->id;
+        try
+        {
+            $userID = Auth::user()->id;
+        }
+        catch(Exception $exc)
+        {
+            return Redirect::to("/")->with("errors_login", "Please log in first");
+        }
 
         try
         {
