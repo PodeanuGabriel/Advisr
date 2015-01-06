@@ -17,11 +17,16 @@
 
 <div class="container-fluid">
     <div class="row">
+        <div class="col-md-11 col-md-offset-1 col-sm-12">
+            <h1 class="page-title">DASHBOARD</h1>
+        </div>
+    </div>
+    <div class="row">
 
-        <div class="col-md-2">
+        <div class="col-md-2 col-md-offset-1 left-menu">
 
-            <div class="sidebar dashboard-sidebar">
-                <a class="btn btn-primary" data-toggle="modal" data-target="#addAppModal" role="button">ADD APP</a>
+            <div class="sidebar dashboard-sidebar text-center">
+                <a class="btn btn-less-dark" data-toggle="modal" data-target="#addAppModal" role="button">ADD APP</a>
             </div>
 
             <div class="sidebar dashboard-sidebar">
@@ -57,9 +62,9 @@
 
         </div>
 
-        <div class="col-md-10">
+        <div class="col-md-9 main-information">
 
-            <h1>Dashboard</h1>
+            
 
             <ul class="nav nav-tabs" data-tabs="tabs">
                 <li class="active"><a href="#apps" data-toggle="tab">Apps</a></li>
