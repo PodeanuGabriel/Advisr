@@ -8,6 +8,7 @@ class DashboardController extends BaseController {
         {
             try
             {
+                $userID = Auth::user()->id;
                 $apps = AppModel::where('userid', '=', $userID)->get();
             }
             catch(Exception $exc)
