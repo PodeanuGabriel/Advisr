@@ -25,7 +25,7 @@ class AppController extends BaseController
 
             if(empty($errors))
             {
-                if (Auth::check())
+                if(Auth::check())
                 {
                     try
                     {

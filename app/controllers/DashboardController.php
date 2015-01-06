@@ -4,24 +4,22 @@ class DashboardController extends BaseController {
     
     public function index()
     {       
-        try
+        if(Auth::check())
         {
-            $userID = Auth::user()->id;
+            try
+            {
+                $apps = AppModel::where('userid', '=', $userID)->get();
+            }
+            catch(Exception $exc)
+            {
+                return View::make('dashboard')->with('error', 'Apps failing');
+            }
+
+            return View::make('dashboard')->with('apps', $apps);
         }
-        catch(Exception $exc)
+        else
         {
             return Redirect::to("/")->with("errors_login", "Please log in first");
         }
-
-        try
-        {
-            $apps = AppModel::where('userid', '=', $userID)->get();
-        }
-        catch(Exception $exc)
-        {
-            return View::make('dashboard')->with('error', 'Apps failing');
-        }
-
-        return View::make('dashboard')->with('apps', $apps);
     }
 }
