@@ -114,7 +114,7 @@
                 </div>
 
                 <div class="tab-pane" id="statistics">
-
+                    <h3 class="page-header">Statistics</h3>
                 </div>
             </div>
 
