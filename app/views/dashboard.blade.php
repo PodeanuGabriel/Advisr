@@ -39,7 +39,8 @@
                                 '{{ URL::to('app-edit'); }}',
                                 '{{ URL::to('app-recommendation'); }}',
                                 '{{ URL::to('app-users') }}',
-                                '{{ URL::to('categories'); }}'
+                                '{{ URL::to('categories'); }}',
+                                '{{ URL::to('app-categories-edit'); }}'
                             );"
                         >
                             <?php echo str_replace('\'', '', $app->name); ?>

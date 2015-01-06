@@ -49,7 +49,7 @@ class CategoryController extends BaseController
         }
     }
 
-    public function getCategories()
+    public function getCategories($nAppID)
     {
         if(Auth::check())
         {
@@ -57,12 +57,23 @@ class CategoryController extends BaseController
 
             try
             {
-                $arrCategories = CategoryModel::all();
+                $arrCategories = CategoryModel::orderBy("name", "asc")->get();
                 foreach($arrCategories as $objCategory)
                 {
-                    if(!in_array($objCategory->name, $arrCategoryNames["response"]))
+                    $objAppCategory = AppCategoryModel::where("id_category", "=", $objCategory->id)
+                        ->where("id_app", "=", $nAppID)
+                        ->first();
+
+                    if(!in_array($objCategory->name, array_keys($arrCategoryNames["response"])))
                     {
-                        $arrCategoryNames["response"][] = $objCategory->name;
+                        if($objAppCategory)
+                        {
+                            $arrCategoryNames["response"][$objCategory->name] = true;
+                        }
+                        else
+                        {
+                            $arrCategoryNames["response"][$objCategory->name] = false;
+                        }
                     }
                 }
             }

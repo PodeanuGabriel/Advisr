@@ -75,7 +75,6 @@ function renderForm(objFormData)
         if(objFormData.fields[objInput].type == "select")
         {
             var elFormInput = document.createElement("select");
-            elFormInput.setAttribute("name", "select"+objFormData.fields[objInput].name);
             elFormInput.setAttribute("form", elForm.id);
             elFormInput.setAttribute("class", "form-control");
 
@@ -93,20 +92,25 @@ function renderForm(objFormData)
             var elFormInput = document.createElement("ul");
             elFormInput.setAttribute("class", "list-unstyled");
 
-            for(var nIndex in objFormData.fields[objInput]["values"])
+            for(var mxIndex in objFormData.fields[objInput]["values"])
             {
                 var elFormInputItem = document.createElement("li");
 
                 var elFormInputCheckbox = document.createElement("input");
                 elFormInputCheckbox.setAttribute("type", objFormData.fields[objInput].type);
-                elFormInputCheckbox.setAttribute("name", objFormData.fields[objInput]["values"][nIndex]);
-                elFormInputCheckbox.setAttribute("id", objFormData.fields[objInput]["values"][nIndex]);
-                elFormInputCheckbox.setAttribute("value", objFormData.fields[objInput]["values"][nIndex]);
-                elFormInputCheckbox.innerHTML = objFormData.fields[objInput]["values"][nIndex];
+                elFormInputCheckbox.setAttribute("name", mxIndex);
+                elFormInputCheckbox.setAttribute("id", mxIndex);
+                elFormInputCheckbox.setAttribute("value", mxIndex);
+                elFormInputCheckbox.innerHTML = mxIndex;
+
+                if(objFormData.fields[objInput]["values"][mxIndex])
+                {
+                    elFormInputCheckbox.setAttribute("checked", "checked");
+                }
 
                 var elFormInputCheckboxLabel = document.createElement("label");
-                elFormInputCheckboxLabel.setAttribute("for", objFormData.fields[objInput]["values"][nIndex]);
-                elFormInputCheckboxLabel.innerHTML = objFormData.fields[objInput]["values"][nIndex];
+                elFormInputCheckboxLabel.setAttribute("for", mxIndex);
+                elFormInputCheckboxLabel.innerHTML = mxIndex;
 
                 elFormInputItem.appendChild(elFormInputCheckbox);
                 elFormInputItem.appendChild(elFormInputCheckboxLabel);
@@ -131,31 +135,45 @@ function renderForm(objFormData)
         elForm.appendChild(elContainer);
     }
 
-    var elSubmitButtonContainer = document.createElement("div");
-    elSubmitButtonContainer.setAttribute("class", "col-sm-9 modal-footer");
+    if(objFormData.hasOwnProperty("submitText") && objFormData.submitText.length)
+    {
+        var elSubmitButtonContainer = document.createElement("div");
+        elSubmitButtonContainer.setAttribute("class", "col-sm-9 modal-footer");
 
-    var elSubmitButton = document.createElement("input");
+
+        var elSubmitButton = document.createElement("input");
+        elSubmitButton.setAttribute("type", "submit");
+        elSubmitButton.setAttribute("value", objFormData.submitText);
+        elSubmitButton.setAttribute("class", "btn btn-success");
+
+        elSubmitButtonContainer.appendChild(elSubmitButton);
+    }
 
     // If the method and action properties are not defined then an AJAX call is made instead of form submission.
-    if(!objFormData.method.length && !objFormData.action.length)
+    if(objFormData.hasOwnProperty("ajaxButton") && objFormData.ajaxButton.length)
     {
-        elSubmitButton.setAttribute("type", "button");
+        var elAjaxButton = document.createElement("input");
+        elAjaxButton.setAttribute("type", "button");
+        elAjaxButton.setAttribute("value", objFormData.ajaxButton);
+        elAjaxButton.setAttribute("class", "btn btn-success");
 
-        if(objFormData.ajax_url.length)
+        elSubmitButtonContainer.appendChild(elAjaxButton);
+
+        if (objFormData.ajax_url.length)
         {
-            elSubmitButton.addEventListener(
+            elAjaxButton.addEventListener(
                 "click",
-                function()
+                function ()
                 {
-                    var arrFormInputs = $("#"+objFormData.parent_id+" :input");
+                    var arrFormInputs = $("#" + objFormData.parent_id + " :input");
                     var strInitialURL = objFormData.ajax_url;
                     var arrCheckboxValues = [];
                     var bInvalidInput = false;
 
-                    for(var elInput in arrFormInputs)
+                    for (var elInput in arrFormInputs)
                     {
                         //Check only input fields that are not used for submission or AJAX calls ( fields completed by the user ).
-                        if(
+                        if (
                             arrFormInputs[elInput].type != "submit"
                             && arrFormInputs[elInput].type != "button"
                             && arrFormInputs[elInput].hasOwnProperty("value")
@@ -164,17 +182,17 @@ function renderForm(objFormData)
                             //If by some chance an input is left empty mark the URL for the ajax call as invalid.
                             //This is done because the URL is completed with information from every field and if one field is not completed then
                             //The final URL would be invalid.
-                            if(!arrFormInputs[elInput].value.length)
+                            if (!arrFormInputs[elInput].value.length)
                             {
                                 bInvalidInput = true;
                             }
                             else
                             {
-                                if(arrFormInputs[elInput].type != "checkbox")
+                                if (arrFormInputs[elInput].type != "checkbox")
                                 {
                                     objFormData.ajax_url = objFormData.ajax_url + "/" + arrFormInputs[elInput].value;
                                 }
-                                else if(arrFormInputs[elInput].checked)
+                                else if (arrFormInputs[elInput].checked)
                                 {
                                     arrCheckboxValues.push(arrFormInputs[elInput].value);
                                 }
@@ -182,16 +200,16 @@ function renderForm(objFormData)
                         }
                     }
 
-                    if(arrCheckboxValues.length)
+                    if (arrCheckboxValues.length)
                     {
                         objFormData.ajax_url = objFormData.ajax_url + "/" + arrCheckboxValues;
                     }
 
-                    if(!bInvalidInput)
+                    if (!bInvalidInput)
                     {
                         $.get(
                             objFormData.ajax_url,
-                            function(mxResponse)
+                            function (mxResponse)
                             {
                                 //Clear is needed here because the page is not refreshed when clicking the button with the "click" event listener added.
                                 clearForm(objFormData.ajax_result_container_id);
@@ -199,7 +217,7 @@ function renderForm(objFormData)
                                 var objResponse = JSON.parse(mxResponse);
 
                                 //If the call returns than generate a table that holds the information.
-                                if(objResponse["response"])
+                                if (objResponse["response"])
                                 {
                                     //Calling the function specified in the objFormData's ajax_callback property.
                                     objFormData.ajax_callback.call(
@@ -223,21 +241,8 @@ function renderForm(objFormData)
             );
         }
     }
-    else
-    {
-        elSubmitButton.setAttribute("type", "submit");
-    }
 
-    if(objFormData.submitText)
-    {
-        elSubmitButton.setAttribute("value", objFormData.submitText);
-        elSubmitButton.setAttribute("class", "btn btn-success");
-
-        elSubmitButtonContainer.appendChild(elSubmitButton);
-
-        elForm.appendChild(elSubmitButtonContainer);
-    }
-
+    elForm.appendChild(elSubmitButtonContainer);
 
     document.getElementById(objFormData.parent_id).appendChild(elForm);
 }
@@ -254,7 +259,7 @@ function clearForm(mxParentID)
 }
 
 
-function getAppDetails(nAppID, strAppGetRoute, strAppEditRoute, strAppRecommendationsRoute, strAppUsersRoute, strCategoriesRoute)
+function getAppDetails(nAppID, strAppGetRoute, strAppEditRoute, strAppRecommendationsRoute, strAppUsersRoute, strCategoriesRoute, strAppCateoriesEditRoute)
 {
     // Remove the active class from all <li> elements
     $("#appList > li").each(
@@ -303,7 +308,7 @@ function getAppDetails(nAppID, strAppGetRoute, strAppEditRoute, strAppRecommenda
                     }
                 );
 
-                objFormAppData.submitText="Save";
+                objFormAppData.submitText = "Save";
 
                 renderForm(objFormAppData);
 
@@ -312,8 +317,8 @@ function getAppDetails(nAppID, strAppGetRoute, strAppEditRoute, strAppRecommenda
                 // Add recommendation form only if the URL that returns the existing categories can be accessed.
                 var objFormAppRecommendations = {};
                 objFormAppRecommendations.parent_id = "appRecommendations";
-                objFormAppRecommendations.method = "";
-                objFormAppRecommendations.action = "";
+                objFormAppRecommendations.method = "POST";
+                objFormAppRecommendations.action = strAppCateoriesEditRoute+"/"+nAppID;
 
                 objFormAppRecommendations.ajax_url = strAppRecommendationsRoute+"/"+nAppID;
                 objFormAppRecommendations.ajax_result_container_id = "recommendationList";
@@ -342,11 +347,13 @@ function getAppDetails(nAppID, strAppGetRoute, strAppEditRoute, strAppRecommenda
                                 }
                             );
 
+                            objFormAppRecommendations.submitText = "Save";
+
                             if(objResponse["response"].length)
-                                objFormAppRecommendations.submitText = "Get";
+                                objFormAppRecommendations.ajaxButton = "Get";
 
                             $.get(
-                                strCategoriesRoute,
+                                strCategoriesRoute+"/"+nAppID,
                                 function(mxResponse)
                                 {
                                     var objResponse = JSON.parse(mxResponse);

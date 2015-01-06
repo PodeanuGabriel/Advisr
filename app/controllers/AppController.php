@@ -128,6 +128,40 @@ class AppController extends BaseController
         }
     }
 
+    public function editAppCategories($nAppID)
+    {
+        if(Auth::check())
+        {
+            try
+            {
+                AppCategoryModel::where("id_app", "=", $nAppID)->delete();
+
+                foreach(Input::all() as $strCategory)
+                {
+                    $objCategory = CategoryModel::where("name", "=", Input::get($strCategory))->first();
+
+                    $appCategory = new AppCategoryModel;
+
+                    $appCategory->id_app = $nAppID;
+                    $appCategory->id_category = $objCategory->id;
+
+                    $appCategory->save();
+                }
+            }
+            catch(Exception $exc)
+            {
+                return Redirect::to("dashboard")->with("errors", $exc->getMessage());
+            }
+
+            return Redirect::to("dashboard");
+        }
+        else
+        {
+            return Redirect::to("/")->with("errors_login", "Please log in first");
+        }
+    }
+
+
     public function getAppUsers($nAppID)
     {
         if(Auth::check())
@@ -163,7 +197,6 @@ class AppController extends BaseController
             return Redirect::to("/")->with("errors_login", "Please log in first");
         }
     }
-
 
 
     public function getAppRecommendation($nAppID, $strUserName, $strCategories)

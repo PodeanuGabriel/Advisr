@@ -27,10 +27,11 @@ Route::any('/dashboard', 'DashboardController@index');
 /* AppController routes */
 Route::post('/app-add', 'AppController@addApp');
 Route::post('/app-edit/{appID}', 'AppController@editApp');
+Route::post('/app-categories-edit/{appID}', 'AppController@editAppCategories');
 Route::get('/app-get/{appID}', 'AppController@getApp');
 Route::get('/app-users/{appID}', 'AppController@getAppUsers');
 Route::get('/app-recommendation/{appID}/{userID}/{category}', 'AppController@getAppRecommendation');
 
 /* CategoryController routes */
 Route::post('/category-add', 'CategoryController@addCategory');
-Route::get('/categories', 'CategoryController@getCategories');
+Route::get('/categories/{appID}', 'CategoryController@getCategories');
