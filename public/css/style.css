@@ -110,6 +110,15 @@ body {
     bottom: 50px;
 }
 
+#login-dropdown {
+    background-color: #3F5666;
+    color: #F8CA4D;
+}
+
+#login-dropdown .btn-dark {
+    font-size: 15px;
+}
+
 /***********************************
  ************ BUTTONS **************
  ***********************************/
@@ -128,6 +137,18 @@ body {
     background-color: #F5E5C0 !important;
     color: #2F3440 !important;
     border-color: #2F3440 !important;
+}
+
+/***********************************
+ **** NOTIFICATION MESSAGES ********
+ ***********************************/
+.error-message {
+    font-weight: 600;
+    color: #EA6045;
+}
+
+.error-message > span {
+    text-align: center;
 }
 
 /***********************************

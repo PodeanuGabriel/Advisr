@@ -39,9 +39,7 @@
                                     $('#login-dropdown').show();
                                 });
                             </script>
-                            <div class="alert alert-danger" role="alert">
-                                {{ $message }}
-                            </div>
+
                             @endif
 
                             <form method="post" action="{{ Url::to('login') }}">
@@ -54,8 +52,11 @@
                                         <label for="password">Password</label>
                                         <input type="password" placeholder="Password" name="password" class="form-control input-sm" id="password" />
                                     </div>
+                                    <div class="spacer-bottom col-sm-12 error-message">
+                                        <span> {{ $message }} </span>
+                                    </div>                                    
                                     <div class="spacer-bottom col-sm-12">
-                                        <button type="submit" class="btn btn-success btn-sm">Sign in</button>
+                                        <button type="submit" class="btn btn-dark btn-success btn-sm">Sign in</button>
                                     </div>
                                 </div>
 
