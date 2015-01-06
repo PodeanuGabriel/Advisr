@@ -134,6 +134,11 @@ body {
     color: #F8CA4D !important;
 }
 
+.btn-light {
+    color: #2F3440 !important;
+    font-weight: 600;
+}
+
 .btn-less-dark {
     background-color: #3F5666 !important;
     color: #F8CA4D !important;
@@ -235,7 +240,7 @@ body {
 }
 
 .page-title {
-    border-bottom: 3px solid #F8CA4D;
+    border-bottom: 4px solid #F8CA4D;
     padding-left: 24px;
     margin-bottom: 35px;
     margin-top: 25px;
@@ -304,13 +309,22 @@ body {
 
 .main-information > .tab-content {
     padding: 0 25px;
+    border: solid 1px #F5E5C0;
 }
 
 .main-information > .tab-content .page-header {
-    padding: 40px 0 20px;
-    margin: 0;
+    padding: 40px 0 5px 10px;
+    margin: 0 0 20px;
+    border-bottom: 3px solid #F8CA4D;
 }
 
+.main-information .nav-tabs>li.active>a
+{
+    color: #3F5666;
+    background-color: #F5E5C0;
+    font-weight: 600;
+    border-radius: 0;    
+}
 
 /* Dashboard CSS */
 

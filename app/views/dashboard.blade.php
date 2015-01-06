@@ -67,7 +67,7 @@
             
 
             <ul class="nav nav-tabs" data-tabs="tabs">
-                <li class="active"><a href="#apps" data-toggle="tab">Apps</a></li>
+                <li class="active"><a href="#apps" data-toggle="tab">App Info</a></li>
                 <li><a href="#embedded" data-toggle="tab">Code to embed</a></li>
                 <li><a href="#statistics" data-toggle="tab">Statistics</a></li>
             </ul>

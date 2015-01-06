@@ -144,7 +144,7 @@ function renderForm(objFormData)
         var elSubmitButton = document.createElement("input");
         elSubmitButton.setAttribute("type", "submit");
         elSubmitButton.setAttribute("value", objFormData.submitText);
-        elSubmitButton.setAttribute("class", "btn btn-success");
+        elSubmitButton.setAttribute("class", "btn btn-less-dark");
 
         elSubmitButtonContainer.appendChild(elSubmitButton);
     }
@@ -155,7 +155,7 @@ function renderForm(objFormData)
         var elAjaxButton = document.createElement("input");
         elAjaxButton.setAttribute("type", "button");
         elAjaxButton.setAttribute("value", objFormData.ajaxButton);
-        elAjaxButton.setAttribute("class", "btn btn-success");
+        elAjaxButton.setAttribute("class", "btn btn-light");
 
         elSubmitButtonContainer.appendChild(elAjaxButton);
 
@@ -350,7 +350,7 @@ function getAppDetails(nAppID, strAppGetRoute, strAppEditRoute, strAppRecommenda
                             objFormAppRecommendations.submitText = "Save";
 
                             if(objResponse["response"].length)
-                                objFormAppRecommendations.ajaxButton = "Get";
+                                objFormAppRecommendations.ajaxButton = "Get recommendations";
 
                             $.get(
                                 strCategoriesRoute+"/"+nAppID,
