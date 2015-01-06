@@ -29,7 +29,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <input type="submit" form="addAppForm" name="submitButton" class="btn btn-success" value="Submit" />
+                <input type="submit" form="addAppForm" name="submitButton" class="btn btn-dark" value="Submit" />
             </div>
         </div>
     </div>
