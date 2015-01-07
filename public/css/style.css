@@ -206,6 +206,17 @@ body {
     padding: 10px;    
 }
 
+#recommendationsModal table {
+    font-weight: 600;
+}
+
+#recommendationsModal th {
+    color: #F8CA4D;
+}
+
+#recommendationsModal td {
+    color: #FFFFFF;
+}
 
 /*    --------------------------------------------------
 	:: Login Section
