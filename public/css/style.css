@@ -7,6 +7,10 @@ body {
     padding-bottom: 0px !important;
 }
 
+.container-fluid > .container-fluid {
+    min-height: 675px;
+}
+
 .pad-top {
     padding-top:40px;
 }
