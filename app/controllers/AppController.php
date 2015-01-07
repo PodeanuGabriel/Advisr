@@ -31,6 +31,7 @@ class AppController extends BaseController
                     {
                         $app = new AppModel;
 
+                        $app->appkey = str_random(16);
                         $app->appsecret = Uuid::generate();
                         $app->name = $strAppName;
                         $app->userid = Auth::user()->id;

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 05 Ian 2015 la 21:36
+-- Generation Time: 07 Ian 2015 la 19:55
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `apps` (
 `id` int(10) NOT NULL,
   `name` varchar(255) NOT NULL,
+  `appkey` varchar(255) NOT NULL,
   `appsecret` varchar(255) NOT NULL,
   `data_url` varchar(255) NOT NULL,
   `userid` int(10) NOT NULL,
@@ -41,8 +42,8 @@ CREATE TABLE IF NOT EXISTS `apps` (
 -- Salvarea datelor din tabel `apps`
 --
 
-INSERT INTO `apps` (`id`, `name`, `appsecret`, `data_url`, `userid`, `rating_type`, `created_at`, `updated_at`) VALUES
-(1, 'TEST', 'TEST', 'asd', 6, 'unary', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `apps` (`id`, `name`, `appkey`, `appsecret`, `data_url`, `userid`, `rating_type`, `created_at`, `updated_at`) VALUES
+(1, 'TEST', 'tzHi0cjekWjz4pZM', '33ddd040-96b8-11e4-8548-ed0829daaebf', 'http://www.google.ro', 7, 'unary', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -62,8 +63,8 @@ CREATE TABLE IF NOT EXISTS `app_categories` (
 --
 
 INSERT INTO `app_categories` (`id_app`, `id_category`, `created_at`, `updated_at`) VALUES
-(1, 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(1, 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(1, 1, '2015-01-07 18:33:47', '2015-01-07 18:33:47'),
+(1, 2, '2015-01-07 18:33:47', '2015-01-07 18:33:47');
 
 -- --------------------------------------------------------
 
@@ -95,16 +96,18 @@ INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
 CREATE TABLE IF NOT EXISTS `items` (
 `id` int(10) unsigned NOT NULL,
   `url` varchar(512) NOT NULL,
-  `category` int(10) unsigned NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+  `category` int(10) unsigned NOT NULL,
+  `name` varchar(256) NOT NULL,
+  `photo_url` varchar(512) NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Salvarea datelor din tabel `items`
 --
 
-INSERT INTO `items` (`id`, `url`, `category`) VALUES
-(1, 'http://localhost/test_js.html', 1),
-(2, 'http://localhost/test_js2.html', 2);
+INSERT INTO `items` (`id`, `url`, `category`, `name`, `photo_url`) VALUES
+(2, 'http://localhost/test_js2.html', 2, '', ''),
+(4, 'http://localhost/test_js.html', 2, 'itemshmen', 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQdWU51VMKb1vZBZENSVHEXsg03CNV6WNpjaWyGZu0phA1mjOcn');
 
 -- --------------------------------------------------------
 
@@ -123,8 +126,10 @@ CREATE TABLE IF NOT EXISTS `preferences` (
 
 INSERT INTO `preferences` (`user_id`, `item_id`) VALUES
 (1, 1),
+(1, 4),
 (2, 1),
-(2, 2);
+(2, 2),
+(4, 1);
 
 -- --------------------------------------------------------
 
@@ -235,7 +240,7 @@ MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `users`
 --
