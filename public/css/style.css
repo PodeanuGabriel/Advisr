@@ -125,6 +125,30 @@ body {
     font-size: 15px;
 }
 
+.featurette .featurette-heading {
+    background-color: #2F3440;
+    margin-top: 50px;
+    color: #F8CA4D;
+    padding: 20px;
+    border-radius: 15px;
+    /*color: #2F3440;*/
+}
+
+.featurette .featurette-heading .text-muted {
+    color: #6d6d6d;
+}
+
+.featurette .lead {
+    /*background-color: #2F3440;*/
+    color: #2F3440;
+    padding: 5px;
+    font-size: 23px;
+}
+
+.featurette-divider {
+    margin: 50px 0 !important;
+}
+
 /***********************************
  ************ BUTTONS **************
  ***********************************/
