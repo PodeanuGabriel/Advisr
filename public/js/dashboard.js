@@ -48,6 +48,7 @@ function renderTable(strParentID, arrColumnNames, arrData)
     elParent.appendChild(elRecommendationTable);
 }
 
+
 function clearContents(mxParentID)
 {
     var elAppDetails = document.getElementById(mxParentID);
@@ -57,6 +58,47 @@ function clearContents(mxParentID)
     }
 
 }
+
+
+function generateFormURL(mxFormReference)
+{
+    document.getElementById(mxFormReference.id).action = mxFormReference.action+"/"+mxFormReference.app_id;
+}
+
+
+function getAppRecommendations(strAppRecommendationURL)
+{
+    var arrSelectedCheckboxes = [];
+
+    var nAppID = document.getElementById("app_recommendations").app_id;
+
+    var arrUsers = document.getElementById("app_users");
+    var strUser = arrUsers.options[arrUsers.selectedIndex].value;
+
+    var arrCheckboxes = $("#app_categories :input");
+    for(var mxIndex in arrCheckboxes)
+    {
+        if(arrCheckboxes[mxIndex].checked)
+            arrSelectedCheckboxes.push(arrCheckboxes[mxIndex].value);
+    }
+
+    strAppRecommendationURL = strAppRecommendationURL+"/"+nAppID+"/"+strUser+"/"+arrSelectedCheckboxes;
+
+    $.get(
+        strAppRecommendationURL,
+        function(mxResponse)
+        {
+            var objResponse = JSON.parse(mxResponse);
+            if(Object.keys(objResponse["response"]).length)
+            {
+                var arrTableColumns = ["Item ID", "Category"];
+
+                renderTable("app_recommendation_list", arrTableColumns, objResponse["response"]);
+            }
+        }
+    );
+}
+
 
 function getAppDetails(nAppID, strAppGetRoute, strAppUsersGetRoute, strCategoriesGetRoute)
 {
@@ -157,40 +199,7 @@ function getAppDetails(nAppID, strAppGetRoute, strAppUsersGetRoute, strCategorie
 }
 
 
-function generateFormURL(mxFormReference)
+function getAppStatistics(nAppID)
 {
-    document.getElementById(mxFormReference.id).action = mxFormReference.action+"/"+mxFormReference.app_id;
-}
-
-function getAppRecommendations(strAppRecommendationURL)
-{
-    var arrSelectedCheckboxes = [];
-
-    var nAppID = document.getElementById("app_recommendations").app_id;
-
-    var arrUsers = document.getElementById("app_users");
-    var strUser = arrUsers.options[arrUsers.selectedIndex].value;
-
-    var arrCheckboxes = $("#app_categories :input");
-    for(var mxIndex in arrCheckboxes)
-    {
-        if(arrCheckboxes[mxIndex].checked)
-            arrSelectedCheckboxes.push(arrCheckboxes[mxIndex].value);
-    }
-
-    strAppRecommendationURL = strAppRecommendationURL+"/"+nAppID+"/"+strUser+"/"+arrSelectedCheckboxes;
-
-    $.get(
-        strAppRecommendationURL,
-        function(mxResponse)
-        {
-            var objResponse = JSON.parse(mxResponse);
-            if(Object.keys(objResponse["response"]).length)
-            {
-                var arrTableColumns = ["Item ID", "Category"];
-
-                renderTable("app_recommendation_list", arrTableColumns, objResponse["response"]);
-            }
-        }
-    );
+    console.log("STATISTICS for APP: "+nAppID);
 }

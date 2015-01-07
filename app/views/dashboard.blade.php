@@ -16,13 +16,14 @@
 <?php endif; ?>
 
 <div class="container-fluid">
+
     <div class="row">
         <div class="col-md-11 col-md-offset-1 col-sm-12">
             <h1 class="page-title">DASHBOARD</h1>
         </div>
     </div>
-    <div class="row">
 
+    <div class="row">
         <div class="col-md-2 col-md-offset-1 left-menu">
 
             <div class="sidebar dashboard-sidebar text-center">
@@ -61,9 +62,7 @@
 
         <div class="col-md-9 main-information">
 
-            
-
-            <ul class="nav nav-tabs" data-tabs="tabs">
+            <ul id="app_tabs" class="nav nav-tabs" data-tabs="tabs">
                 <li class="active"><a href="#apps" data-toggle="tab">App Info</a></li>
                 <li><a href="#embedded" data-toggle="tab">Code to embed</a></li>
                 <li><a href="#statistics" data-toggle="tab">Statistics</a></li>
@@ -71,10 +70,13 @@
 
             <div class="tab-content">
                 <div class="tab-pane active" id="apps">
+
                     <div class="placeholders">
+
                         <h3 class="page-header">Credentials</h3>
                         <div id="appCredentials" class="col-sm-12 placeholder">
                             <form id="formForAppCredetials"class="col-sm-9 form-horizontal">
+
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">API Key:</label>
                                     <div id="api_key" class="col-sm-6 control-label"></div>
@@ -84,14 +86,18 @@
                                     <label class="col-sm-3 control-label">API Secret:</label>
                                     <div id="api_secret" class="col-sm-6 control-label"></div>
                                 </div>
+
                             </form>
+
                             <div style="clear:both"></div>
                         </div>
+
                         <div style="clear:both"></div>
 
                         <h3 class="page-header">Edit app</h3>
                         <div id="appDetails" class="col-sm-12 placeholder">
                             <form id="formForAppDetails" class="col-sm-9 form-horizontal" method="POST" action='{{ URL::to('app-edit'); }}' onsubmit="generateFormURL(this);">
+
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">App name:</label>
                                     <div class="col-sm-6">
@@ -109,15 +115,18 @@
                                 <div class="col-sm-9 modal-footer">
                                     <input type="submit" value="Save" class="btn btn-less-dark" />
                                 </div>
+
                             </form>
+
                             <div style="clear:both"></div>
                         </div>
+
                         <div style="clear:both"></div>
 
                         <h3 class="page-header">Get recommendations</h3>
                         <div id="appRecommendations" class="col-sm-12 placeholder">
-
                             <form id="formForAppRecommendations" class="col-sm-9 form-horizontal" method="POST" action="{{ URL::to('app-categories-edit'); }}" onsubmit="generateFormURL(this);">
+
                                 <div class="form-group">
                                     <label class="col-sm-3 control-label">App users:</label>
                                     <div class="col-sm-6">
@@ -136,12 +145,16 @@
                                     <input type="submit" value="Save" class="btn btn-less-dark" />
                                     <input id="app_recommendations" type="hidden" value="Get recommendations" onclick="getAppRecommendations('{{ URL::to('app-recommendation'); }}');" class="btn btn-light" />
                                 </div>
+
                             </form>
+
                             <div style="clear:both"></div>
                         </div>
+
                         <div style="clear:both"></div>
 
                         <div id="app_recommendation_list"></div>
+
                     </div>
 
                     <div style="clear:both"></div>
@@ -177,6 +190,7 @@
         </div>
 
     </div>
+
 </div>
 
 <script>
