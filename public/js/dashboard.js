@@ -1,51 +1,33 @@
 /**
  * Created by gabriel on 16/12/14.
  */
-function renderTable(strParentID, arrColumnNames, arrData)
+function renderRecommendationModal(mxModalBodyID, arrColumnNames, arrData)
 {
-    var elParent = document.getElementById(strParentID);
-    while (elParent.firstChild)
+    var elRecommendationModalBody = document.getElementById(mxModalBodyID);
+    while (elRecommendationModalBody.firstChild)
     {
-        elParent.removeChild(elParent.firstChild);
+        elRecommendationModalBody.removeChild(elRecommendationModalBody.firstChild);
     }
 
-    var elRecommendationTable = document.createElement("table");
-    elRecommendationTable.setAttribute("class", "table table-striped");
-
-    var elRecommendationTableHead = document.createElement("thead");
-
-    var elRecommendationTableHeadRow = document.createElement("tr");
-    for(var nIndex in arrColumnNames)
-    {
-        var elRecommendationTableHeadRowColumn = document.createElement("th");
-        elRecommendationTableHeadRowColumn.innerHTML = arrColumnNames[nIndex];
-
-        elRecommendationTableHeadRow.appendChild(elRecommendationTableHeadRowColumn);
-    }
-
-    var elRecommendationTableBody = document.createElement("tbody");
-    for(var arrRow in arrData)
+    for(var objItem in arrData)
     {
         var elRecommendationTableBodyRow = document.createElement("tr");
 
         var elProductID = document.createElement("td");
-        elProductID.innerHTML = arrData[arrRow]["item_id"];
+        elProductID.innerHTML = arrData[objItem]["itemId"];
 
-        var elProductCategory = document.createElement("td");
-        elProductCategory.innerHTML = arrData[arrRow]["category"];
+        var elProductURL = document.createElement("td");
+        elProductURL.innerHTML = arrData[objItem]["url"];
+
+        var elProductRating = document.createElement("td");
+        elProductRating.innerHTML = arrData[objItem]["rating"];
 
         elRecommendationTableBodyRow.appendChild(elProductID);
-        elRecommendationTableBodyRow.appendChild(elProductCategory);
+        elRecommendationTableBodyRow.appendChild(elProductURL);
+        elRecommendationTableBodyRow.appendChild(elProductRating);
 
-        elRecommendationTableBody.appendChild(elRecommendationTableBodyRow);
+        elRecommendationModalBody.appendChild(elRecommendationTableBodyRow);
     }
-
-    elRecommendationTableHead.appendChild(elRecommendationTableHeadRow);
-
-    elRecommendationTable.appendChild(elRecommendationTableHead);
-    elRecommendationTable.appendChild(elRecommendationTableBody);
-
-    elParent.appendChild(elRecommendationTable);
 }
 
 
@@ -66,7 +48,7 @@ function generateFormURL(mxFormReference)
 }
 
 
-function getAppRecommendations(strAppRecommendationURL)
+function getAppRecommendations()
 {
     var arrSelectedCheckboxes = [];
 
@@ -82,18 +64,24 @@ function getAppRecommendations(strAppRecommendationURL)
             arrSelectedCheckboxes.push(arrCheckboxes[mxIndex].value);
     }
 
-    strAppRecommendationURL = strAppRecommendationURL+"/"+nAppID+"/"+strUser+"/"+arrSelectedCheckboxes;
+    setCookie("advisr_user", strUser, 1000);
+
+    var advisrApiKey = document.getElementById("api_key").innerHTML;
+    var advisrApiSecret = document.getElementById("api_secret").innerHTML;;
+    var advisrUser = getCookie("advisr_user");
+    var advisrHowMany = document.getElementById("item_count").value;
+
+    var advisrUrl = "http://localhost:8080/recommender/rest/api/recommend?apiKey="+advisrApiKey+"&apiSecret="+advisrApiSecret+"&toUser="+advisrUser+"&howMany="+advisrHowMany;
 
     $.get(
-        strAppRecommendationURL,
+        advisrUrl,
         function(mxResponse)
         {
-            var objResponse = JSON.parse(mxResponse);
-            if(Object.keys(objResponse["response"]).length)
+            if(typeof mxResponse == "object")
             {
-                var arrTableColumns = ["Item ID", "Category"];
+                var arrTableColumns = ["Item ID", "Rating", "URL"];
 
-                renderTable("app_recommendation_list", arrTableColumns, objResponse["response"]);
+                renderRecommendationModal("recommendation_modal_body", arrTableColumns, mxResponse);
             }
         }
     );
@@ -112,7 +100,6 @@ function getAppDetails(nAppID, strAppGetRoute, strAppUsersGetRoute, strCategorie
 
     clearContents("app_users");
     clearContents("app_categories");
-    clearContents("app_recommendation_list");
 
     // Add the active class to the first <li> element
     document.getElementById(nAppID).parentNode.setAttribute("class", "active");
@@ -124,7 +111,7 @@ function getAppDetails(nAppID, strAppGetRoute, strAppUsersGetRoute, strCategorie
             var objResult = JSON.parse(mxResponse);
             if(objResult)
             {
-                document.getElementById("api_key").innerHTML = objResult["id"];
+                document.getElementById("api_key").innerHTML = objResult["appkey"];
                 document.getElementById("api_secret").innerHTML = objResult["appsecret"];
 
                 document.getElementById("formForAppDetails").app_id = nAppID;

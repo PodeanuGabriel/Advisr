@@ -1,6 +1,7 @@
 @extends('layout.main')
 
 @include('modals/add-app')
+@include('modals/recommendations')
 
 @section('content')
 
@@ -38,14 +39,7 @@
                     ?>
 
                     <li>
-                        <a id="<?php echo $app->id; ?>"
-                            onclick="getAppDetails(
-                                this.id,
-                                '{{ URL::to('app-get'); }}',
-                                '{{ URL::to('app-users') }}',
-                                '{{ URL::to('categories'); }}'
-                            );"
-                        >
+                        <a id="<?php echo $app->id; ?>" onclick="getAppDetails(this.id, '{{ URL::to('app-get'); }}', '{{ URL::to('app-users') }}', '{{ URL::to('categories'); }}');">
                             <?php echo str_replace('\'', '', $app->name); ?>
                         </a>
                     </li>
@@ -135,6 +129,13 @@
                                 </div>
 
                                 <div class="form-group">
+                                            <label class="col-sm-3 control-label">Item count</label>
+                                            <div class="col-sm-6">
+                                                <input id="item_count" type="number" value="1" min="1" max="1000" class="form-control" />
+                                            </div>
+                                        </div>
+
+                                <div class="form-group">
                                     <label class="col-sm-3 control-label">Categories:</label>
                                     <div class="col-sm-6">
                                         <ul id="app_categories" class="list-unstyled"></ul>
@@ -143,7 +144,7 @@
 
                                 <div class="col-sm-9 modal-footer">
                                     <input type="submit" value="Save" class="btn btn-less-dark" />
-                                    <input id="app_recommendations" type="hidden" value="Get recommendations" onclick="getAppRecommendations('{{ URL::to('app-recommendation'); }}');" class="btn btn-light" />
+                                    <input id="app_recommendations" type="hidden" value="Get recommendations" onclick="getAppRecommendations();" class="btn btn-light" data-toggle="modal" data-target="#recommendationsModal" />
                                 </div>
 
                             </form>
@@ -152,8 +153,6 @@
                         </div>
 
                         <div style="clear:both"></div>
-
-                        <div id="app_recommendation_list"></div>
 
                     </div>
 
@@ -211,6 +210,8 @@
 
     </div>
 
+    <div id="advisr-box" class="hidden"></div>
+
 </div>
 
 <script>
@@ -225,5 +226,12 @@
     );
 
 </script>
+
+<script>
+    var advisrApiKey = 'TEST';
+    var advisrApiSecret = 'TEST';
+    var advisrHowMany = 3;
+</script>
+<script type="text/javascript" src="{{ URL::asset('js/box.js'); }}"></script>
 
 @stop

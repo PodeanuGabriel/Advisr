@@ -35,3 +35,8 @@ Route::get('/app-recommendation/{appID}/{userID}/{category}', 'AppController@get
 /* CategoryController routes */
 Route::post('/category-add', 'CategoryController@addCategory');
 Route::get('/categories/{appID}', 'CategoryController@getCategories');
+
+Route::get('/test', function()
+{
+    return View::make('test');
+});
