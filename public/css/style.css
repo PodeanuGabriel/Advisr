@@ -4,7 +4,7 @@
  ============================================================ */
 body {
     font-family: 'Open Sans', sans-serif;
-
+    padding-bottom: 0px !important;
 }
 
 .pad-top {
@@ -263,20 +263,6 @@ body {
     color: #fff;
 }
 
-/*    --------------------------------------------------
-    :: Footer
-	-------------------------------------------------- */
-#footer {
-    color: #6d6d6d;
-    font-size: 12px;
-    text-align: center;
-}
-#footer p {
-    margin-bottom: 0;
-}
-#footer a {
-    color: inherit;
-}
 
 /************************
 ******* DASHBOARD *******
@@ -343,4 +329,26 @@ body {
 #appRecommendations div.modal-footer {
     border-top: 0px;
     border-bottom: 0px;
+}
+
+/***************************
+******** FOOTER ************
+****************************/
+
+footer {
+    height: 60px;
+    background-color: #2F3440;
+    color: #F8CA4D;
+    margin-right: -15px;
+    margin-left: -15px;
+    padding: 20px 50px;
+    font-weight: 600;
+}
+
+footer a {
+    color: #F5E5C0;
+}
+
+footer a:hover {
+    color: #F8CA4D;
 }

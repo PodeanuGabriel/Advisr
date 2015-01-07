@@ -33,6 +33,9 @@
 
     <div class="container-fluid marketing">
         @yield('content')
+        
+    @include('footer')
+    
     </div>
 
 </body>

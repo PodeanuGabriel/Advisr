@@ -59,6 +59,23 @@
                 </div>
             </div>
         </div>
+        <div class="item">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>Easy to get, easy to use. </h1>
+                    <p><a class="btn btn-dark btn-lg btn-primary" role="button">View documentation</a></p>
+                </div>
+            </div>
+        </div>        
+        <div class="item">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>You're just one step away from having accurate recommendations on your web site.</h1>
+                    <p><a class="btn btn-dark btn-lg btn-primary" data-toggle="modal" data-target="#registerModal" role="button">Sign up today</a></p>
+                </div>
+            </div>
+        </div>
+
     </div>
     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
     <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -138,14 +155,11 @@
     <!-- /END THE FEATURETTES -->
 
 
-    <!-- FOOTER -->
-    <footer>
-        <p class="pull-right"><a href="#">Back to top</a></p>
-        <p>&copy; 2014 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
-    </footer>
+
 
 </div><!-- /.container -->
-
-
+<div class='container-fluid'>
+    @include('footer')
+</div>
 </body>
 </html>
