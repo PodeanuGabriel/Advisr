@@ -9,14 +9,16 @@ class DashboardController extends BaseController {
             try
             {
                 $userID = Auth::user()->id;
-                $apps = AppModel::where('userid', '=', $userID)->get();
+                $apps = AppModel::where("userid", "=", $userID)
+                    ->orderBy("id", "desc")
+                    ->get();
             }
             catch(Exception $exc)
             {
-                return View::make('dashboard')->with('error', 'Apps failing');
+                return View::make("dashboard")->with("error", "Apps failing");
             }
 
-            return View::make('dashboard')->with('apps', $apps);
+            return View::make("dashboard")->with("apps", $apps);
         }
         else
         {
