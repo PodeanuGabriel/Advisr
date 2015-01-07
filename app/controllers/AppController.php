@@ -79,7 +79,7 @@ class AppController extends BaseController
         {
             try
             {
-                $appData = AppModel::where("id", "=", $nAppID)->get();
+                $appData = AppModel::where("id", "=", $nAppID)->first();
             }
             catch(Exception $exc)
             {

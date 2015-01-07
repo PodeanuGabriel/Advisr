@@ -41,11 +41,8 @@
                             onclick="getAppDetails(
                                 this.id,
                                 '{{ URL::to('app-get'); }}',
-                                '{{ URL::to('app-edit'); }}',
-                                '{{ URL::to('app-recommendation'); }}',
                                 '{{ URL::to('app-users') }}',
-                                '{{ URL::to('categories'); }}',
-                                '{{ URL::to('app-categories-edit'); }}'
+                                '{{ URL::to('categories'); }}'
                             );"
                         >
                             <?php echo str_replace('\'', '', $app->name); ?>
@@ -75,17 +72,76 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="apps">
                     <div class="placeholders">
-                        <h3 class="page-header">Edit app</h3>
-                        <div id="appDetails" class="col-sm-12 placeholder"></div>
+                        <h3 class="page-header">Credentials</h3>
+                        <div id="appCredentials" class="col-sm-12 placeholder">
+                            <form id="formForAppCredetials"class="col-sm-9 form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">API Key:</label>
+                                    <div id="api_key" class="col-sm-6 control-label"></div>
+                                </div>
 
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">API Secret:</label>
+                                    <div id="api_secret" class="col-sm-6 control-label"></div>
+                                </div>
+                            </form>
+                            <div style="clear:both"></div>
+                        </div>
+                        <div style="clear:both"></div>
+
+                        <h3 class="page-header">Edit app</h3>
+                        <div id="appDetails" class="col-sm-12 placeholder">
+                            <form id="formForAppDetails" class="col-sm-9 form-horizontal" method="POST" action='{{ URL::to('app-edit'); }}' onsubmit="generateFormURL(this);">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">App name:</label>
+                                    <div class="col-sm-6">
+                                        <input id="app_name" type="text" name="name" value="" class="form-control" required="required" aria-required="true" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">App data URL:</label>
+                                    <div class="col-sm-6">
+                                        <input id="app_url" type="url" name="data_url" value="" class="form-control" required="required" aria-required="true" />
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-9 modal-footer">
+                                    <input type="submit" value="Save" class="btn btn-less-dark" />
+                                </div>
+                            </form>
+                            <div style="clear:both"></div>
+                        </div>
                         <div style="clear:both"></div>
 
                         <h3 class="page-header">Get recommendations</h3>
-                        <div id="appRecommendations" class="col-sm-12 placeholder"></div>
+                        <div id="appRecommendations" class="col-sm-12 placeholder">
 
+                            <form id="formForAppRecommendations" class="col-sm-9 form-horizontal" method="POST" action="{{ URL::to('app-categories-edit'); }}" onsubmit="generateFormURL(this);">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">App users:</label>
+                                    <div class="col-sm-6">
+                                        <select id="app_users" form="formForappRecommendations" class="form-control"></select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label">Categories:</label>
+                                    <div class="col-sm-6">
+                                        <ul id="app_categories" class="list-unstyled"></ul>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-9 modal-footer">
+                                    <input type="submit" value="Save" class="btn btn-less-dark" />
+                                    <input id="app_recommendations" type="hidden" value="Get recommendations" onclick="getAppRecommendations('{{ URL::to('app-recommendation'); }}');" class="btn btn-light" />
+                                </div>
+                            </form>
+                            <div style="clear:both"></div>
+                        </div>
                         <div style="clear:both"></div>
 
-                        <div id="recommendationList"></div>
+                        <div id="app_recommendation_list"></div>
                     </div>
 
                     <div style="clear:both"></div>
