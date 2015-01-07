@@ -37,6 +37,17 @@ class AppController extends BaseController
                         $app->data_url = $strDataURL;
 
                         $app->save();
+
+                        $arrCategories = CategoryModel::all();
+                        foreach($arrCategories as $objCategory)
+                        {
+                            $appCategory = new AppCategoryModel();
+
+                            $appCategory->id_app = $app->id;
+                            $appCategory->id_category = $objCategory->id;
+
+                            $appCategory->save();
+                        }
                     }
                     catch(Exception $exc)
                     {
