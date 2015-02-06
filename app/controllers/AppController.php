@@ -140,6 +140,42 @@ class AppController extends BaseController
         }
     }
 
+
+    public function deleteApp()
+    {
+        $errors = array();
+
+        if(!Input::has("app_id"))
+            $errors[] = "Please enter app id!";
+
+        if(empty($errors))
+        {
+            $nAppID = Input::get("app_id");
+
+            if(Auth::check())
+            {
+                try
+                {
+                    AppCategoryModel::where("id_app", "=", $nAppID)->delete();
+                    AppModel::where("id", "=", $nAppID)->delete();
+                }
+                catch(Exception $exc)
+                {
+                    return View::make("dashboard")->with("error", "App delete failed");
+                }
+            }
+            else
+            {
+                return Redirect::to("/")->with("errors_login", "Please log in first");
+            }
+        }
+        else
+        {
+            return Redirect::to("dashboard")->with("errors", $errors);
+        }
+    }
+
+
     public function editAppCategories($nAppID)
     {
         if(Auth::check())
@@ -258,6 +294,7 @@ class AppController extends BaseController
             return Redirect::to("/")->with("errors_login", "Please log in first");
         }
     }
+
 
     public function getAppStatisticsByAccessNumber($nAppID)
     {

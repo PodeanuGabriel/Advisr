@@ -222,6 +222,21 @@ body {
     color: #FFFFFF;
 }
 
+#deleteAppModal .modal-dialog {
+    width: 420px;
+    font-size: 18px;
+}
+
+#deleteAppModal .buttons-container {
+    padding: 15px;
+}
+
+#deleteAppModal .buttons-container input[type=button], 
+#deleteAppModal .buttons-container input[type=submit] {
+    font-size: 18px;
+    margin-left: 10px;
+}
+
 /*    --------------------------------------------------
 	:: Login Section
 	-------------------------------------------------- */

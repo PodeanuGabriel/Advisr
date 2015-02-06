@@ -27,6 +27,7 @@ Route::any('/dashboard', 'DashboardController@index');
 /* AppController routes */
 Route::post('/app-add', 'AppController@addApp');
 Route::post('/app-edit/{appID}', 'AppController@editApp');
+Route::post('/app-delete', 'AppController@deleteApp');
 Route::post('/app-categories-edit/{appID}', 'AppController@editAppCategories');
 Route::get('/app-get/{appID}', 'AppController@getApp');
 Route::get('/app-users/{appID}', 'AppController@getAppUsers');

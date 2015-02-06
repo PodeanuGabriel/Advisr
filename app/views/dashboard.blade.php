@@ -1,6 +1,7 @@
 @extends('layout.main')
 
 @include('modals/add-app')
+@include('modals/delete-app')
 @include('modals/recommendations')
 
 @section('content')
@@ -55,7 +56,8 @@
                                 )(this.id)
                             );">
                             <?php echo $app->name; ?>
-                            <span class="glyphicon glyphicon-trash pull-right" data-toggle="modal" data-target="" role="button"></span>
+                            
+                            <span class="glyphicon glyphicon-trash pull-right" data-toggle="modal" data-target="#deleteAppModal"></span>
                         </a>
                     </li>
 
