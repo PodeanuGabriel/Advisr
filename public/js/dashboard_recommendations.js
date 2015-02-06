@@ -13,6 +13,12 @@ function renderRecommendationModal(mxModalBodyID, arrColumnNames, arrData)
     {
         var elRecommendationTableBodyRow = document.createElement("tr");
 
+        var elProductPhoto = document.createElement("td");
+
+        var elPhoto = document.createElement("img");
+        elPhoto.src = arrData[objItem]["photo_url"]
+        elProductPhoto.appendChild(elPhoto);
+
         var elProductID = document.createElement("td");
         elProductID.innerHTML = arrData[objItem]["itemId"];
 
@@ -79,7 +85,7 @@ function getAppRecommendations()
         {
             if(typeof mxResponse == "object")
             {
-                var arrTableColumns = ["Item ID", "Rating", "URL"];
+                var arrTableColumns = ["Item photo", "Item ID", "Rating", "URL"];
 
                 renderRecommendationModal("recommendation_modal_body", arrTableColumns, mxResponse);
             }
