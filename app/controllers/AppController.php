@@ -163,6 +163,8 @@ class AppController extends BaseController
                 {
                     return View::make("dashboard")->with("error", "App delete failed");
                 }
+
+                return Redirect::to("dashboard");
             }
             else
             {

@@ -56,7 +56,7 @@
                                 )(this.id)
                             );">
                             <?php echo $app->name; ?>
-                            
+
                             <span class="glyphicon glyphicon-trash pull-right" data-toggle="modal" data-target="#deleteAppModal"></span>
                         </a>
                     </li>
