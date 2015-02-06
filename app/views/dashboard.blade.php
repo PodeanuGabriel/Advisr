@@ -44,9 +44,10 @@
                                     {
                                         document.getElementById('app_statistics_tab').addEventListener(
                                             'click',
-                                            function(nAppID)
+                                            function()
                                             {
-                                                getAppStatistics('{{ URL::to('app-statistics') }}', nAppID);
+                                                getAppStatisticsByAccess('{{ URL::to('app-statistics-access') }}', nAppID, 'appStatisticsByAccess');
+                                                getAppStatisticsByPreference('{{ URL::to('app-statistics-preference') }}', nAppID, 'appStatisticsByPreference');
                                             },
                                             false
                                         );
@@ -187,6 +188,8 @@
                             <br/>
                             <span>var advisrCategory = 'haine';</span><br/>
                             <span>var advisrName = 'item1';</span><br/>
+                            <span>var advisrApiKey = 'TEST';</span><br/>
+                            <span>var advisrApiSecret = 'TEST';</span><br/>
                             <span>var advisrPhoto = 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQdWU51VMKb1vZBZENSVHEXsg03CNV6WNpjaWyGZu0phA1mjOcn';</span><br/>
                             <span>&lt;/script&gt;</span><br/>
                             <br/>
@@ -256,7 +259,8 @@
                 <div class="tab-pane" id="statistics">
 
                     <h3 class="page-header">Statistics</h3>
-                    <div id="appStatistics" class="col-sm-12 placeholder"></div>
+                    <div id="appStatisticsByAccess" class="col-sm-12 placeholder"></div>
+                    <div id="appStatisticsByPreference" class="col-sm-12 placeholder"></div>
 
                     <div style="clear:both"></div>
 
