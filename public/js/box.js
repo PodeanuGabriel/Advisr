@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded',function(){
 			for(var i in resp){
                 console.log(resp[i]);
 				//content += '<li><a href="'+ resp[i].url + '">' + resp[i].url + '</a></li>';
-                content += '<div id="advisr-recommend"><a href="'+resp[i].url+'"><img src="'+resp[i].photo_url+'" style="width:150px; height:150px" />'+resp[i].item_name+'</a></div>';
+                content += '<div id="advisr-recommend"><a href="'+resp[i].url+'"><img src="'+resp[i].photo_url+'" style="width:'+displayData['thumbnail_width']+'px; height:'+displayData['thumbnail_height']+'px" />'+resp[i].item_name+'</a></div>';
 				console.log(resp[i].url);
 			}
 			content += "</div>";

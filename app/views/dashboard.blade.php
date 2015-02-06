@@ -210,8 +210,8 @@
                                                value="2" />
                                     </div>
                                     <div class="col-md-12">
-                                        <input name="thumbnail_height" class="form-control" id="thumbnail_height" 
-                                               placeholder="Thumbnail height (px)" />
+                                        <input name="thumbnail_height" class="form-control" id="thumbnail_height"
+                                               onchange="setAttributes()" placeholder="Thumbnail height (px)" />
                                     </div>
                                 </div>
                             </div>
@@ -251,7 +251,7 @@
                     <div id="advisr-recommendations">
                         <div id="advisr-recommend">
                             <a href="http://google.ro">
-                                <img src="http://www.aamu.edu/news/2011/Documents/Tree.png" style="width:150px; height:150px" />
+                                <img class="advisr-thumb" src="http://www.aamu.edu/news/2011/Documents/Tree.png" style="width:150px; height:150px" />
                                 recomandare 1
                             </a>
                         </div>

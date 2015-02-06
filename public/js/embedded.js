@@ -7,7 +7,8 @@ function setAttributes()
     $("#advisr-recommendations").css('border-width', $("#border_width").val() + "px" );
     $("#advisr-recommendations").css('border-color', "#" + $("#border_color").val() );
     $("#advisr-recommendations").css('width', $("#box_width").val() + "px" );
-
+    $(".advisr-thumb").css('width', $("#thumbnail_width").val() + "px");
+    $(".advisr-thumb").css('height', $("#thumbnail_height").val() + "px");
     var cloned = $("#advisr-recommend");
 
     $("#advisr-recommendations").html('');
