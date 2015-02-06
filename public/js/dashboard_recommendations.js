@@ -14,7 +14,6 @@ function renderRecommendationModal(mxModalBodyID, arrColumnNames, arrData)
         var elRecommendationTableBodyRow = document.createElement("tr");
 
         var elProductPhoto = document.createElement("td");
-
         var elPhoto = document.createElement("img");
         elPhoto.src = arrData[objItem]["photo_url"]
         elProductPhoto.appendChild(elPhoto);
@@ -28,6 +27,7 @@ function renderRecommendationModal(mxModalBodyID, arrColumnNames, arrData)
         var elProductRating = document.createElement("td");
         elProductRating.innerHTML = arrData[objItem]["rating"];
 
+        elRecommendationTableBodyRow.appendChild(elProductPhoto);
         elRecommendationTableBodyRow.appendChild(elProductID);
         elRecommendationTableBodyRow.appendChild(elProductURL);
         elRecommendationTableBodyRow.appendChild(elProductRating);
