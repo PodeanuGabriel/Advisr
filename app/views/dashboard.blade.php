@@ -222,11 +222,32 @@
                     <br/>
                     <p>The <code>advisrApikey</code> and <code>advisrApiSecret</code> variables have to contain the actual API_KEY and API_SECRET received upon adding an app.</p>
 
+                    <h3 class="page-header">Get your own design</h3>
                     <form id="display-data">
-                        <input name="border_width" class="form-control" id="border_width" onchange="setAttributes()" placeholder="Border width (px)" value="2" />
-                        <input name="border_color" class="form-control" id="border_color" placeholder="Border Color" />
-                        <input name="box_width" class="form-control" id="box_width" onchange="setAttributes()" placeholder="Box width (px) " />
-                        <input name="how_many" class="form-control" id="how_many" onchange="setAttributes()" placeholder="How many "  value="1"/>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Recommendations number:</label>
+                                <input name="how_many" class="form-control" id="how_many" onchange="setAttributes()" placeholder="How many "  value="1"/>                                
+                            </div>
+                            <div class="col-md-3">
+                                <label>Box width:</label>
+                                <input name="box_width" class="form-control" id="box_width" onchange="setAttributes()" placeholder="Box width (px) " />
+                            </div>                            
+                            <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>Border: </label>
+                                        <input name="border_width" class="form-control" id="border_width" 
+                                               onchange="setAttributes()" placeholder="Border width (px)" 
+                                               value="2" />
+                                    </div>
+                                    <div class="col-md-12">
+                                        <input name="border_color" class="form-control" id="border_color" 
+                                               placeholder="Border Color" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </form>
 
                     <style>

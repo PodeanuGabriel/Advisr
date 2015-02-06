@@ -463,3 +463,11 @@ footer a {
 footer a:hover {
     color: #F8CA4D;
 }
+
+/*
+** CODE TO EMBED
+*/
+
+#display-data .row > .col-md-12{
+    margin-bottom: 5px;
+}
