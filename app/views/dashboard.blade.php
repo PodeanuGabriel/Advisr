@@ -290,7 +290,7 @@
         {
             $("#appList li:first-child a:first-child").trigger("click");
 
-            renderCodeToEmbed("{{ URL::to('app-get') }}");
+            renderCodeToEmbed("{{ URL::to('app-get') }}", "{{ URL::asset('js/collect.js') }}", "{{ URL::asset('js/box.js') }}");
 
             $('#border_color').colpick(
                 {
@@ -308,6 +308,8 @@
                     }
                 }
             ).keyup(function(){ $(this).colpickSetColor(this.value); });
+
+            setAttributes();
         },
         false
     );

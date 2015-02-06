@@ -19,7 +19,7 @@ function setAttributes()
     //console.log($("#display-data").serialize());
 }
 
-function renderCodeToEmbed(strAppGetURL)
+function renderCodeToEmbed(strAppGetURL, strCollectURL, strViewURL)
 {
     var elActiveAppID = $("#appList > li.active :first-child").attr("id");
 
@@ -35,7 +35,6 @@ function renderCodeToEmbed(strAppGetURL)
                     "<p>" +
                     "<code>" +
                     "<span>&lt;script&gt;</span><br/>" +
-                    "<br/>" +
                     "<span>var advisrCategory = 'haine';</span><br/>" +
                     "<span>var advisrName = 'item1';</span><br/>" +
                     "<span>var advisrApiKey = '"+ objResult["appkey"] +"';</span><br/>" +
@@ -43,7 +42,7 @@ function renderCodeToEmbed(strAppGetURL)
                     "<span>var advisrPhoto = 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQdWU51VMKb1vZBZENSVHEXsg03CNV6WNpjaWyGZu0phA1mjOcn';</span><br/>" +
                     "<span>&lt;/script&gt;</span><br/>" +
                     "<br/>" +
-                    "<span>&lt;script type=\"text/javascript\" src=\"{{ URL::asset('js/collect.js'); }}\"&gt;&lt;/script&gt;</span>" +
+                    "<span>&lt;script type=\"text/javascript\" src=\""+strCollectURL+"\"&gt;&lt;/script&gt;</span>" +
                     "</code>" +
                     "</p>" +
                     "<br/>" +
@@ -59,14 +58,13 @@ function renderCodeToEmbed(strAppGetURL)
                 "<p>" +
                 "<code>" +
                 "<span>&lt;div id=\"advisr-box\"&gt;&lt;/div&gt;</span><br/>" +
-                "<br/>" +
                 "<span>&lt;script&gt;</span><br/>" +
                 "<span>var advisrApiKey = '"+ objResult["appkey"] +"';</span><br/>" +
                 "<span>var advisrApiSecret = '"+ objResult["appsecret"] +"';</span><br/>" +
                 "<span>var advisrDisplayBox = '<span id=\"display-box-data\"></span>';</span><br/>" +
                 "<span>&lt;/script&gt;</span><br/>" +
                 "<br/>" +
-                "<span>&lt;script type=\"text/javascript\" src=\"{{ URL::asset('js/box.js'); }}\"&gt;&lt;/script&gt;</span>" +
+                "<span>&lt;script type=\"text/javascript\" src=\""+strViewURL+"\"&gt;&lt;/script&gt;</span>" +
                 "</code>" +
                 "</p>" +
                 "<br/>" +
