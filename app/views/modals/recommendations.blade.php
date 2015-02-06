@@ -16,6 +16,7 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>Item photo</th>
                             <th>Item ID</th>
                             <th>Item URL</th>
                             <th>Rating</th>
