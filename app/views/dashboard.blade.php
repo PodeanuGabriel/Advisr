@@ -34,7 +34,7 @@
                     ?>
 
                     <li>
-                        <a id="<?php echo $app->id; ?>" onclick="getAppDetails(
+                        <a class="app_item" id="<?php echo $app->id; ?>" onclick="getAppDetails(
                                 this.id,
                                 '{{ URL::to('app-get'); }}',
                                 '{{ URL::to('app-users') }}',
@@ -54,6 +54,7 @@
                                 )(this.id)
                             );">
                             <?php echo $app->name; ?>
+                            <span class="glyphicon glyphicon-trash pull-right" onclick=""></span>
                         </a>
                     </li>
 

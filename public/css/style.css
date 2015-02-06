@@ -404,6 +404,10 @@ body {
     background-color: #eee;
 }
 
+.dashboard-sidebar > ul > li > a:hover {
+    border-radius:5px;
+}
+
 #appDetails div.modal-footer,
 #appRecommendations div.modal-footer {
     border-top: 0px;
@@ -412,6 +416,14 @@ body {
 
 #appStatistics {
     min-height:500px;
+}
+
+.app_item > span {
+    display:none;
+}
+
+.app_item:hover > span {
+    display:block;
 }
 
 /***************************

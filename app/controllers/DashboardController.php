@@ -8,7 +8,6 @@ class DashboardController extends BaseController {
 		
 		if(Auth::check())
         {
-            
 			try
             {
                 $userID = Auth::user()->id;
