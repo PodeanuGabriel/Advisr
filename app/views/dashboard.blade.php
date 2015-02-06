@@ -68,7 +68,7 @@
 
         </div>
 
-        <div class="col-md-9 main-information">
+        <div class="col-md-8 main-information">
             <?php
             if(count($apps) > 0)
             {
