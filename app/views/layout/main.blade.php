@@ -13,6 +13,7 @@
     <!-- Bootstrap core CSS -->
     <link href="{{ URL::asset('css/bootstrap.min.css'); }}" rel="stylesheet">
     <link href="{{ URL::asset('css/bootstrapValidator.min.css'); }}" rel="stylesheet">
+    <link href="{{ URL::asset('css/colpick.css'); }}" rel="stylesheet">
     <link href="{{ URL::asset('css/style.css'); }}" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -24,6 +25,7 @@
     <!-- JS utils ( bootstrap and jquery ) -->
     <script src="{{ URL::asset('js/jquery-1.11.1.min.js'); }}"></script>
     <script src="{{ URL::asset('js/bootstrap.min.js'); }}"></script>
+    <script src="{{ URL::asset('js/colpick.js'); }}"></script>
 
     <!-- Dasboard JS file -->
     <script src="{{ URL::asset('js/dashboard_recommendations.js'); }}"></script>

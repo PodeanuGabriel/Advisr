@@ -24,7 +24,7 @@
 <script>
     var advisrApiKey = 'TEST';
     var advisrApiSecret = 'TEST';
-    var advisrHowMany = 3;
+    var advisrDisplayBox = 'border_width=4&border_color=F8CA4D&box_width=800&how_many=3';
 </script>
 <script type="text/javascript" src="{{ URL::asset('js/box.js'); }}"></script>
 

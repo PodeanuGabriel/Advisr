@@ -177,6 +177,7 @@
                     <div style="clear:both"></div>
                 </div>
 
+                <!-- embed -->
                 <div class="tab-pane" id="embedded">
                     <h3 class="page-header">How to collect data</h3>
                     <br/>
@@ -190,7 +191,7 @@
                             <span>var advisrPhoto = 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQdWU51VMKb1vZBZENSVHEXsg03CNV6WNpjaWyGZu0phA1mjOcn';</span><br/>
                             <span>&lt;/script&gt;</span><br/>
                             <br/>
-                            <span>&lt;script type="text/javascript" src="collect.js"&gt;&lt;/script&gt;</span>
+                            <span>&lt;script type="text/javascript" src="{{ URL::asset('js/collect.js'); }}"&gt;&lt;/script&gt;</span>
                         </code>
                     </p>
                     <br/>
@@ -209,15 +210,49 @@
                             <span>&lt;script&gt;</span><br/>
                             <span>var advisrApiKey = 'TEST';</span><br/>
                             <span>var advisrApiSecret = 'TEST';</span><br/>
-                            <span>var advisrHowMany = 3;</span><br/>
+                            <span>var advisrDisplayBox = '<span id="display-box-data"></span>';</span><br/>
                             <span>&lt;/script&gt;</span><br/>
                             <br/>
-                            <span>&lt;script type="text/javascript" src="box.js"&gt;&lt;/script&gt;</span>
+                            <span>&lt;script type="text/javascript" src="{{ URL::asset('js/box.js'); }}"&gt;&lt;/script&gt;</span>
                         </code>
                     </p>
                     <br/>
                     <p>The <code>advisrApikey</code> and <code>advisrApiSecret</code> variables have to contain the actual API_KEY and API_SECRET received upon adding an app.</p>
+
+                    <form id="display-data">
+                        <input name="border_width" class="form-control" id="border_width" onchange="setAttributes()" placeholder="Border width (px)" value="2" />
+                        <input name="border_color" class="form-control" id="border_color" placeholder="Border Color" />
+                        <input name="box_width" class="form-control" id="box_width" onchange="setAttributes()" placeholder="Box width (px) " />
+                        <input name="how_many" class="form-control" id="how_many" onchange="setAttributes()" placeholder="How many "  value="1"/>
+                    </form>
+
+                    <style>
+                        #advisr-recommendations {
+                            list-style-type: none;
+                            overflow: hidden;
+
+                        }
+                        #advisr-recommendations #advisr-recommend {
+                            display:inline-block;
+                            width:200px;
+                            text-align: center;
+                        }
+                        #advisr-recommendations img {
+                            display:block;
+                            margin:auto;
+                        }
+                    </style>
+                    <div id="advisr-recommendations">
+                        <div id="advisr-recommend">
+                            <a href="http://google.ro">
+                                <img src="http://www.aamu.edu/news/2011/Documents/Tree.png" style="width:150px; height:150px" />
+                                recomandare 1
+                            </a>
+                        </div>
+
+                    </div>
                 </div>
+                <!-- END embed -->
 
                 <div class="tab-pane" id="statistics">
 
@@ -246,6 +281,23 @@
         function()
         {
             $("#appList li:first-child a:first-child").trigger("click");
+
+            $('#border_color').colpick(
+                {
+                    layout:'hex',
+                    submit:0,
+                    colorScheme:'dark',
+                    onChange:function(hsb,hex,rgb,el,bySetColor)
+                    {
+                        //$(el).css('border-color','#'+hex);
+                        // Fill the text box just if the color was set using the picker, and not the colpickSetColor function.
+                        if(!bySetColor)
+                            $(el).val(hex);
+
+                        setAttributes();
+                    }
+                }
+            ).keyup(function(){ $(this).colpickSetColor(this.value); });
         },
         false
     );
