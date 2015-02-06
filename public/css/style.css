@@ -222,6 +222,14 @@ body {
     color: #FFFFFF;
 }
 
+#recommendationsModal .modal-dialog {
+    width: 80%;
+}
+
+#recommendationsModal table td {
+    word-wrap: break-word;
+}
+
 #deleteAppModal .modal-dialog {
     width: 420px;
     font-size: 18px;
@@ -474,4 +482,9 @@ footer a:hover {
 
 #advisr-recommendations {
     margin-bottom: 30px;
+}
+    
+#advisr-recommend img {
+    max-width: 100%;
+    height: auto;
 }
