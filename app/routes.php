@@ -43,3 +43,15 @@ Route::get('/test', function()
 {
     return View::make('test');
 });
+
+/*demo*/
+Route::get('/demo/page1', 'DemoController@page1');
+Route::get('/demo/page2', 'DemoController@page2');
+Route::get('/demo/page3', 'DemoController@page3');
+Route::get('/demo/page4', 'DemoController@page4');
+Route::get('/demo/page5', 'DemoController@page5');
+Route::get('/demo/page6', 'DemoController@page6');
+Route::get('/demo/page7', 'DemoController@page7');
+Route::get('/demo/page8', 'DemoController@page8');
+Route::get('/demo/page', 'DemoController@page');
+
