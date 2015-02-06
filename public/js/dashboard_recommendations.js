@@ -16,7 +16,7 @@ function renderRecommendationModal(mxModalBodyID, arrColumnNames, arrData)
         var elProductPhoto = document.createElement("td");
         var elPhoto = document.createElement("img");
         elPhoto.src = arrData[objItem]["photo_url"];
-        elPhoto.setAttribute("max-width", "200px");
+        elPhoto.setAttribute("style", "max-width:200px");
         elProductPhoto.appendChild(elPhoto);
 
         var elProductID = document.createElement("td");
