@@ -258,4 +258,25 @@ class AppController extends BaseController
             return Redirect::to("/")->with("errors_login", "Please log in first");
         }
     }
+
+    public function getAppStatistics($nAppID)
+    {
+        if(Auth::check())
+        {
+            $arrStatisticsData = array();
+
+            $arrStatisticsData[] = array("Year", "value", array("role"=>"style"));
+            $arrStatisticsData[] = array("2010", 10, " color: gray");
+            $arrStatisticsData[] = array("2010", 200, "color: #76A7FA");
+            $arrStatisticsData[] = array("2020", 16, "opacity: 0.2");
+            $arrStatisticsData[] = array("2040", 22, "stroke-color: #703593; stroke-width: 4; fill-color: #C5A5CF");
+            $arrStatisticsData[] = array("2040", 28, "stroke-color: #871B47; stroke-opacity: 0.6; stroke-width: 8; fill-color: #BC5679; fill-opacity: 0.2");
+
+            return json_encode($arrStatisticsData);
+        }
+        else
+        {
+            return Redirect::to("/")->with("errors_login", "Please log in first");
+        }
+    }
 }

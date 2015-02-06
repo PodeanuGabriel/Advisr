@@ -184,9 +184,3 @@ function getAppDetails(nAppID, strAppGetRoute, strAppUsersGetRoute, strCategorie
         }
     );
 }
-
-
-function getAppStatistics(nAppID)
-{
-    console.log("STATISTICS for APP: "+nAppID);
-}

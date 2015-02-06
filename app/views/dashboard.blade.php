@@ -39,8 +39,26 @@
                     ?>
 
                     <li>
-                        <a id="<?php echo $app->id; ?>" onclick="getAppDetails(this.id, '{{ URL::to('app-get'); }}', '{{ URL::to('app-users') }}', '{{ URL::to('categories'); }}');">
-                            <?php echo str_replace('\'', '', $app->name); ?>
+                        <a id="<?php echo $app->id; ?>" onclick="getAppDetails(
+                                this.id,
+                                '{{ URL::to('app-get'); }}',
+                                '{{ URL::to('app-users') }}',
+                                '{{ URL::to('categories'); }}',
+                                (
+                                    function(nAppID)
+                                    {
+                                        document.getElementById('app_statistics_tab').addEventListener(
+                                            'click',
+                                            function(nAppID)
+                                            {
+                                                getAppStatistics('{{ URL::to('app-statistics') }}', nAppID);
+                                            },
+                                            false
+                                        );
+                                    }
+                                )(this.id)
+                            );">
+                            <?php echo $app->name; ?>
                         </a>
                     </li>
 
@@ -57,9 +75,9 @@
         <div class="col-md-9 main-information">
 
             <ul id="app_tabs" class="nav nav-tabs" data-tabs="tabs">
-                <li class="active"><a href="#apps" data-toggle="tab">App Info</a></li>
-                <li><a href="#embedded" data-toggle="tab">Code to embed</a></li>
-                <li><a href="#statistics" data-toggle="tab">Statistics</a></li>
+                <li class="active"><a id="app_details_tab" href="#apps" data-toggle="tab">App Info</a></li>
+                <li><a id="embed_code_tab" href="#embedded" data-toggle="tab">Code to embed</a></li>
+                <li><a id="app_statistics_tab" href="#statistics" data-toggle="tab">Statistics</a></li>
             </ul>
 
             <div class="tab-content">
@@ -202,8 +220,15 @@
                 </div>
 
                 <div class="tab-pane" id="statistics">
+
                     <h3 class="page-header">Statistics</h3>
+                    <div id="appStatistics" class="col-sm-12 placeholder"></div>
+
+                    <div style="clear:both"></div>
+
                 </div>
+
+                <div style="clear:both"></div>
             </div>
 
         </div>

@@ -21,12 +21,16 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-
+    <!-- JS utils ( bootstrap and jquery ) -->
     <script src="{{ URL::asset('js/jquery-1.11.1.min.js'); }}"></script>
     <script src="{{ URL::asset('js/bootstrap.min.js'); }}"></script>
 
-    <script src="{{ URL::asset('js/dashboard.js'); }}"></script>
+    <!-- Dasboard JS file -->
+    <script src="{{ URL::asset('js/dashboard_recommendations.js'); }}"></script>
+    <script src="{{ URL::asset('js/dashboard_statistics.js'); }}"></script>
 
+     <!--Load the AJAX API-->
+     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 </head>
 <body>
     @include('navbar')
