@@ -28,6 +28,7 @@
     <script src="{{ URL::asset('js/colpick.js'); }}"></script>
 
     <!-- Dasboard JS file -->
+    <script src="{{ URL::asset('js/main.js'); }}"></script>
     <script src="{{ URL::asset('js/dashboard_recommendations.js'); }}"></script>
     <script src="{{ URL::asset('js/dashboard_statistics.js'); }}"></script>
 
