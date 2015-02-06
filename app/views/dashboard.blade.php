@@ -183,45 +183,12 @@
                 <div class="tab-pane" id="embedded">
                     <h3 class="page-header">How to collect data</h3>
                     <br/>
-                    <p>In order to collect data on items you need to embed the following code snippet into your web page code.</p>
-                    <p>
-                        <code>
-                            <span>&lt;script&gt;</span><br/>
-                            <br/>
-                            <span>var advisrCategory = 'haine';</span><br/>
-                            <span>var advisrName = 'item1';</span><br/>
-                            <span>var advisrApiKey = 'TEST';</span><br/>
-                            <span>var advisrApiSecret = 'TEST';</span><br/>
-                            <span>var advisrPhoto = 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQdWU51VMKb1vZBZENSVHEXsg03CNV6WNpjaWyGZu0phA1mjOcn';</span><br/>
-                            <span>&lt;/script&gt;</span><br/>
-                            <br/>
-                            <span>&lt;script type="text/javascript" src="{{ URL::asset('js/collect.js'); }}"&gt;&lt;/script&gt;</span>
-                        </code>
-                    </p>
-                    <br/>
-                    <p>The <code>advisrCategory</code> variable should contain the category that the item belongs to.</p>
-                    <p>The <code>advisrName</code> variable should contain the name by which the item is identified.</p>
-                    <p>The <code>advisrPhoto</code> variable should contain the url to a photo of the item. This photo will appear along with the item in a recommendation result.</p>
+                    <div id="how-to-collect"></div>
+
 
                     <h3 class="page-header">How to view data</h3>
                     <br/>
-                    <p>In order to add users to registered app you need to embed the following code snippet into your web page code.</p>
-                    <br/>
-                    <p>
-                        <code>
-                            <span>&lt;div id="advisr-box"&gt;&lt;/div&gt;</span><br/>
-                            <br/>
-                            <span>&lt;script&gt;</span><br/>
-                            <span>var advisrApiKey = 'TEST';</span><br/>
-                            <span>var advisrApiSecret = 'TEST';</span><br/>
-                            <span>var advisrDisplayBox = '<span id="display-box-data"></span>';</span><br/>
-                            <span>&lt;/script&gt;</span><br/>
-                            <br/>
-                            <span>&lt;script type="text/javascript" src="{{ URL::asset('js/box.js'); }}"&gt;&lt;/script&gt;</span>
-                        </code>
-                    </p>
-                    <br/>
-                    <p>The <code>advisrApikey</code> and <code>advisrApiSecret</code> variables have to contain the actual API_KEY and API_SECRET received upon adding an app.</p>
+                    <div id="how-to-view"></div>
 
                     <h3 class="page-header">Get your own design</h3>
                     <form id="display-data">
@@ -322,6 +289,8 @@
         function()
         {
             $("#appList li:first-child a:first-child").trigger("click");
+
+            renderCodeToEmbed("{{ URL::to('app-get') }}");
 
             $('#border_color').colpick(
                 {
