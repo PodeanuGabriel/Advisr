@@ -54,7 +54,7 @@
                                 )(this.id)
                             );">
                             <?php echo $app->name; ?>
-                            <span class="glyphicon glyphicon-trash pull-right" onclick=""></span>
+                            <span class="glyphicon glyphicon-trash pull-right" data-toggle="modal" data-target="" role="button"></span>
                         </a>
                     </li>
 
