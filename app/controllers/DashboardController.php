@@ -4,9 +4,12 @@ class DashboardController extends BaseController {
     
     public function index()
     {       
-        if(Auth::check())
+        $apps = array();
+		
+		if(Auth::check())
         {
-            try
+            
+			try
             {
                 $userID = Auth::user()->id;
                 $apps = AppModel::where("userid", "=", $userID)
@@ -15,7 +18,11 @@ class DashboardController extends BaseController {
             }
             catch(Exception $exc)
             {
-                return View::make("dashboard")->with("error", "Apps failing");
+				die($exc->getMessage());
+				$data = array();
+				$data['error'] = "Apps failing";
+				$data['apps'] = $apps;
+				return View::make("dashboard", $data);
             }
 
             return View::make("dashboard")->with("apps", $apps);
