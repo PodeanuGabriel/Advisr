@@ -31,6 +31,7 @@
     <script src="{{ URL::asset('js/main.js'); }}"></script>
     <script src="{{ URL::asset('js/dashboard_recommendations.js'); }}"></script>
     <script src="{{ URL::asset('js/dashboard_statistics.js'); }}"></script>
+    <script src="{{ URL::asset('js/embedded.js'); }}"></script>
 
      <!--Load the AJAX API-->
      <script type="text/javascript" src="https://www.google.com/jsapi"></script>
