@@ -204,6 +204,20 @@
                             <div class="col-md-3">
                                 <div class="row">
                                     <div class="col-md-12">
+                                        <label>Thumbnails: </label>
+                                        <input name="thumbnail_width" class="form-control" id="thumbnail_width" 
+                                               onchange="setAttributes()" placeholder="Thumbnail width (px)" 
+                                               value="2" />
+                                    </div>
+                                    <div class="col-md-12">
+                                        <input name="thumbnail_height" class="form-control" id="thumbnail_height" 
+                                               placeholder="Thumbnail height (px)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-12">
                                         <label>Border: </label>
                                         <input name="border_width" class="form-control" id="border_width" 
                                                onchange="setAttributes()" placeholder="Border width (px)" 
