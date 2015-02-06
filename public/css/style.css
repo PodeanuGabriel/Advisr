@@ -174,6 +174,10 @@ body {
     font-weight: 600;
 }
 
+.btn-less-dark:hover {
+    background-color: #2F3440 !important;
+}
+
 /***********************************
  **** NOTIFICATION MESSAGES ********
  ***********************************/
@@ -333,6 +337,10 @@ body {
     font-size: 16px;
 }
 
+.main-information {
+    min-height: 500px;
+}
+
 .main-information > .tab-content {
     padding: 0 25px;
     border: solid 1px #F5E5C0;
@@ -353,6 +361,38 @@ body {
 }
 
 /* Dashboard CSS */
+
+.dashboard-content {
+    padding-top: 50px;
+}
+
+.dashboard-content .page-title {
+    padding-left: 0;
+    font-size: 27px;
+    text-align: center;
+    padding-bottom: 8px;
+    margin-top: 5px;
+}
+
+.no-apps {
+    text-align: center;
+    padding: 20px;
+    width: 60%;
+    margin: 13% 15% 0;
+/*    background-color: #F5E5C0;
+    border-radius: 13px;    */
+}
+.no-apps p {
+    font-size: 30px;
+    font-style: italic;
+    color: #3F5666;
+}
+
+.no-apps .btn-dark {
+    padding: 10px 30px;
+    font-size: 17px;
+}
+
 
 .dashboard-sidebar {
     padding-bottom: 9px;

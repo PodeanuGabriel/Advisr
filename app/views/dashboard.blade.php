@@ -17,16 +17,11 @@
 <?php endif; ?>
 
 <div class="container-fluid">
-
-    <div class="row">
-        <div class="col-md-11 col-md-offset-1 col-sm-12">
-            <h1 class="page-title">DASHBOARD</h1>
-        </div>
-    </div>
-
-    <div class="row">
+    <div class="row dashboard-content">
         <div class="col-md-2 col-md-offset-1 left-menu">
-
+            
+            <h1 class="page-title">DASHBOARD</h1>
+            
             <div class="sidebar dashboard-sidebar text-center">
                 <a class="btn btn-less-dark" data-toggle="modal" data-target="#addAppModal" role="button">ADD APP</a>
             </div>
@@ -73,7 +68,10 @@
         </div>
 
         <div class="col-md-9 main-information">
-
+            <?php
+            if(count($apps) > 0)
+            {
+            ?>
             <ul id="app_tabs" class="nav nav-tabs" data-tabs="tabs">
                 <li class="active"><a id="app_details_tab" href="#apps" data-toggle="tab">App Info</a></li>
                 <li><a id="embed_code_tab" href="#embedded" data-toggle="tab">Code to embed</a></li>
@@ -265,6 +263,21 @@
 
                 <div style="clear:both"></div>
             </div>
+            <?php
+            }
+            else {
+            ?>
+            <div class="no-apps">
+                <p>
+                    You haven't added any app yet.
+                </p>
+                <a class="btn btn-dark" data-toggle="modal" data-target="#addAppModal" role="button">
+                    Add your first app
+                </a>
+            </div>
+            <?php
+            }
+            ?>
 
         </div>
 
