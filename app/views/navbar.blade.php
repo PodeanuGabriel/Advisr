@@ -12,15 +12,10 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-left">
                 <li><a href="#about">About</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions<span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        @if (Auth::check())
-                            <li><a href="{{ URL::to('/dashboard') }}">Dashboard</a></li>
-                        @endif
-                        <li><a href="#">View API reference</a></li>
-                    </ul>
-                </li>
+                @if (Auth::check())
+                    <li><a href="{{ URL::to('/dashboard') }}">Dashboard</a></li>
+                @endif
+                <li><a href="#documentation">Documentation</a></li>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
