@@ -17,6 +17,8 @@
 <script>
     var advisrCategory = 'automobile';
     var advisrName = 'item2';
+    var advisrApiKey = 'TEST';
+    var advisrApiSecret = 'TEST';
     var advisrPhoto = 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQdWU51VMKb1vZBZENSVHEXsg03CNV6WNpjaWyGZu0phA1mjOcn';
 </script>
 <script type="text/javascript" src="{{ URL::asset('js/collect.js'); }}"></script>

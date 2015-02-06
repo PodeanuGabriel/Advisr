@@ -259,18 +259,82 @@ class AppController extends BaseController
         }
     }
 
-    public function getAppStatistics($nAppID)
+    public function getAppStatisticsByAccessNumber($nAppID)
     {
         if(Auth::check())
         {
             $arrStatisticsData = array();
-
             $arrStatisticsData[] = array("Year", "value", array("role"=>"style"));
-            $arrStatisticsData[] = array("2010", 10, " color: gray");
+            $res = RequestedPreference::where("request_date", ">", DB::raw('DATE_SUB(NOW(), INTERVAL 30 DAY)'))
+                ->where("app_id", "=", $nAppID)
+                ->orderBy('request_date')
+                ->get();
+
+            $queries = DB::getQueryLog();
+            $last_query = end($queries);
+
+
+            $data = array();
+            foreach($res as $r) {
+                if(isset($data[date('d-m-Y', strtotime($r->request_date))])) {
+                    $data[date('d-m-Y', strtotime($r->request_date))]++;
+                } else {
+                    $data[date('d-m-Y', strtotime($r->request_date))] = 1;
+                }
+                //$arrStatisticsData[] = array("2010", 10, " color: gray");
+            }
+
+            foreach($data as $key => $value) {
+                $arrStatisticsData[] = array($key, (int)$value, " color: blue");
+            }
+            /*$arrStatisticsData[] = array("2010", 10, " color: gray");
             $arrStatisticsData[] = array("2010", 200, "color: #76A7FA");
             $arrStatisticsData[] = array("2020", 16, "opacity: 0.2");
             $arrStatisticsData[] = array("2040", 22, "stroke-color: #703593; stroke-width: 4; fill-color: #C5A5CF");
-            $arrStatisticsData[] = array("2040", 28, "stroke-color: #871B47; stroke-opacity: 0.6; stroke-width: 8; fill-color: #BC5679; fill-opacity: 0.2");
+            $arrStatisticsData[] = array("2040", 28, "stroke-color: #871B47; stroke-opacity: 0.6; stroke-width: 8; fill-color: #BC5679; fill-opacity: 0.2");*/
+
+            return json_encode($arrStatisticsData);
+        }
+        else
+        {
+            return Redirect::to("/")->with("errors_login", "Please log in first");
+        }
+    }
+
+
+    public function getAppStatisticsByPreferenceNumber($nAppID)
+    {
+        if(Auth::check())
+        {
+            $arrStatisticsData = array();
+            $arrStatisticsData[] = array("Year", "value", array("role"=>"style"));
+            $res = CollectedPreference::where("request_date", ">", DB::raw('DATE_SUB(NOW(), INTERVAL 30 DAY)'))
+                ->where("app_id", "=", $nAppID)
+                ->orderBy('request_date')
+                ->get();
+
+            $queries = DB::getQueryLog();
+            $last_query = end($queries);
+
+
+            $data = array();
+            foreach($res as $r) {
+                if(isset($data[date('d-m-Y', strtotime($r->request_date))])) {
+                    $data[date('d-m-Y', strtotime($r->request_date))]++;
+                } else {
+                    $data[date('d-m-Y', strtotime($r->request_date))] = 1;
+                }
+                //$arrStatisticsData[] = array("2010", 10, " color: gray");
+            }
+
+            foreach($data as $key => $value) {
+                $arrStatisticsData[] = array($key, (int)$value, " color: blue");
+            }
+            /*$arrStatisticsData[] = array("2010", 10, " color: gray");
+            $arrStatisticsData[] = array("2010", 200, "color: #76A7FA");
+            $arrStatisticsData[] = array("2020", 16, "opacity: 0.2");
+            $arrStatisticsData[] = array("2040", 22, "stroke-color: #703593; stroke-width: 4; fill-color: #C5A5CF");
+            $arrStatisticsData[] = array("2040", 28, "stroke-color: #871B47; stroke-opacity: 0.6; stroke-width: 8; fill-color: #BC5679; fill-opacity: 0.2");*/
 
             return json_encode($arrStatisticsData);
         }

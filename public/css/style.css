@@ -414,7 +414,8 @@ body {
     border-bottom: 0px;
 }
 
-#appStatistics {
+#appStatisticsByAccess,
+#appStatisticsByPreference {
     min-height:500px;
 }
 

@@ -39,6 +39,12 @@ document.addEventListener('DOMContentLoaded',function(){
 		setCookie("advisr_user", random_string, 1000);
 		advisr_user = random_string;
 	}
+
+    if(typeof advisrApiKey == 'undefined')
+        advisrApiKey = "";
+
+    if(typeof advisrApiSecret == 'undefined')
+        advisrApiSecret = "";
 	
 	if(typeof advisrName == 'undefined')
 		advisrName = "generic";
@@ -54,7 +60,7 @@ document.addEventListener('DOMContentLoaded',function(){
 	advisrPhoto = encodeURIComponent(advisrPhoto);
 	advisrCategory = encodeURIComponent(advisrCategory);
 	
-	var post_url = "url="+document.URL+"&user_id="+advisr_user+"&category="+advisrCategory + "&name="+advisrName + "&photo="+advisrPhoto;
+	var post_url = "url="+document.URL+"&user_id="+advisr_user+"&category="+advisrCategory + "&name="+advisrName + "&photo="+advisrPhoto+"&appKey="+advisrApiKey+"&appSecret="+advisrApiSecret;
 	
 	xmlhttp.send(post_url);
 });
