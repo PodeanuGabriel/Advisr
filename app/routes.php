@@ -43,3 +43,7 @@ Route::get('/test', function()
 {
     return View::make('test');
 });
+
+Route::get('/documentation', function() {
+    return View::make('documentation');
+});

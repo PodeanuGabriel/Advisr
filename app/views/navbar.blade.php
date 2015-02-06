@@ -11,11 +11,10 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-left">
-                <li><a href="#about">About</a></li>
                 @if (Auth::check())
                     <li><a href="{{ URL::to('/dashboard') }}">Dashboard</a></li>
                 @endif
-                <li><a href="#documentation">Documentation</a></li>
+                <li><a href="{{ URL::to('/documentation') }}">Documentation</a></li>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">

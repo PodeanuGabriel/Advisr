@@ -63,7 +63,7 @@
             <div class="container">
                 <div class="carousel-caption">
                     <h1>Easy to get, easy to use. </h1>
-                    <p><a class="btn btn-dark btn-lg btn-primary" role="button">View documentation</a></p>
+                    <p><a class="btn btn-dark btn-lg btn-primary" role="button" href="{{ URL::to('/documentation') }}">View documentation</a></p>
                 </div>
             </div>
         </div>        
